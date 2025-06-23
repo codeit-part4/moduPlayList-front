@@ -1,0 +1,98 @@
+import React from 'react';
+import styled from 'styled-components';
+
+const LoginContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100vw; /* 가로 전체 차지 */
+    background-color: #fafafa;
+    overflow-x: hidden; /* 가로 스크롤 방지 (선택사항) */
+`;
+
+const LoginBox = styled.div`
+    width: 350px;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+`;
+
+const Input = styled.input`
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+`;
+
+const LoginButton = styled.button`
+    width: 100%;
+    background-color: #6e56cf;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+`;
+
+const TextLink = styled.div`
+    text-align: center;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #666;
+
+    a {
+    margin: 0 4px;
+    color: #6e56cf;
+    text-decoration: none;
+    }
+`;
+
+const SocialButton = styled.button<{ bgColor?: string }>`
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${({ bgColor }) => bgColor || '#fff'};
+    cursor: pointer;
+`;
+
+const LoginForm: React.FC = () => {
+    return (
+    <LoginContainer>
+        <LoginBox>
+        <label>이메일</label>
+        <Input type="email" placeholder="woody@playlist.io" />
+        <label>비밀번호</label>
+        <Input type="password" placeholder="***********" />
+        <LoginButton>로그인</LoginButton>
+
+        <TextLink>
+            <div>
+            <a href="#">비밀번호를 잊어버리셨나요?</a>
+            </div>
+            <div>
+            계정이 없으신가요? <a href="#">회원가입</a>
+            </div>
+        </TextLink>
+
+        <hr style={{ margin: '20px 0' }} />
+
+        <SocialButton>
+            Google로 계속하기
+        </SocialButton>
+        <SocialButton bgColor="#fee500">
+            Kakao로 계속하기
+        </SocialButton>
+        </LoginBox>
+    </LoginContainer>
+    );
+};
+
+export default LoginForm;
