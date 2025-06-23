@@ -1,23 +1,22 @@
+// src/components/RegisterForm.tsx
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
-const LoginContainer = styled.div`
+const RegisterContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    width: 100vw; /* 가로 전체 차지 */
+    width: 100vw;
     background-color: #fafafa;
-    overflow-x: hidden; /* 가로 스크롤 방지 (선택사항) */
-`;
+    `;
 
-const LoginBox = styled.div`
+const RegisterBox = styled.div`
     width: 350px;
     padding: 40px;
-    border: 1px solid #ccc;
     border-radius: 8px;
-    background-color: white;
+    border: 1px solid #bfaaff;
+    background-color: #fff;
 `;
 
 const Input = styled.input`
@@ -25,30 +24,35 @@ const Input = styled.input`
     padding: 10px;
     margin-top: 10px;
     font-size: 14px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
 `;
 
-const LoginButton = styled.button`
+const Button = styled.button`  
     width: 100%;
+    padding: 10px;
     background-color: #6e56cf;
     color: white;
-    padding: 10px;
-    margin-top: 20px;
     border: none;
+    margin-top: 20px;
     border-radius: 6px;
     cursor: pointer;
 `;
 
-const TextLink = styled.div`
+const LinkText = styled.div`
     text-align: center;
-    margin-top: 10px;
-    font-size: 12px;
-    color: #666;
+    margin-top: 12px;
+    font-size: 13px;
 
     a {
-    margin: 0 4px;
     color: #6e56cf;
+    margin-left: 4px;
     text-decoration: none;
     }
+    `;
+
+    const Divider = styled.hr`
+    margin: 20px 0;
 `;
 
 const SocialButton = styled.button<{ bgColor?: string }>`
@@ -57,33 +61,31 @@ const SocialButton = styled.button<{ bgColor?: string }>`
     margin-top: 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
+    background-color: ${({ bgColor }) => bgColor || '#fff'};
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${({ bgColor }) => bgColor || '#fff'};
     cursor: pointer;
 `;
 
-const LoginForm: React.FC = () => {
+const RegisterForm: React.FC = () => {
     return (
-    <LoginContainer>
-        <LoginBox>
+    <RegisterContainer>
+        <RegisterBox>
         <label>이메일</label>
         <Input type="email" placeholder="woody@playlist.io" />
+        <label>이름</label>
+        <Input type="text" placeholder="woody" />
         <label>비밀번호</label>
         <Input type="password" placeholder="***********" />
-        <LoginButton>로그인</LoginButton>
 
-        <TextLink>
-            <div>
-            <a href="#">비밀번호를 잊어버리셨나요?</a>
-            </div>
-            <div>
-                계정이 없으신가요? <Link to="/register">회원가입</Link>
-            </div>
-        </TextLink>
+        <Button>가입하기</Button>
 
-        <hr style={{ margin: '20px 0' }} />
+        <LinkText>
+            이미 계정이 있으신가요? <a href="/">로그인</a>
+        </LinkText>
+
+        <Divider />
 
         <SocialButton>
             Google로 계속하기
@@ -91,9 +93,9 @@ const LoginForm: React.FC = () => {
         <SocialButton bgColor="#fee500">
             Kakao로 계속하기
         </SocialButton>
-        </LoginBox>
-    </LoginContainer>
+        </RegisterBox>
+    </RegisterContainer>
     );
 };
 
-export default LoginForm;
+export default RegisterForm;
