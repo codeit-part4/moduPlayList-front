@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from '../api';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Link, useNavigate } from 'react-router-dom'
+import { API_BASE_URL } from '../api'
+import { StyledLabel } from './StyledLabel.tsx'
+import { TextLink } from './TextLink.tsx'
+import { Input } from './Input.tsx'
 
 const LoginContainer = styled.div`
     display: flex;
@@ -21,27 +24,6 @@ const LoginBox = styled.div`
     background-color: white;
 `;
 
-const StyledLabel = styled.label`
-    display: block;
-    color: #333; /* 라벨 텍스트 색상 */
-    font-size: 14px;
-    font-weight: 600; /* 글자 두께 */
-    margin-bottom: 8px; /* 라벨과 입력창 사이의 간격 */
-
-    /* 첫 번째 라벨을 제외한 나머지 라벨에 위쪽 여백 추가 */
-    &:not(:first-child) {
-        margin-top: 8px;
-    }
-`;
-
-const Input = styled.input`
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    color: #333;
-    box-sizing: border-box;
-`;
-
 const LoginButton = styled.button`
     width: 100%;
     background-color: #6e56cf;
@@ -53,20 +35,7 @@ const LoginButton = styled.button`
     cursor: pointer;
 `;
 
-const TextLink = styled.div`
-    text-align: center;
-    margin-top: 10px;
-    font-size: 12px;
-    color: #666;
-
-    a {
-    margin: 0 4px;
-    color: #6e56cf;
-    text-decoration: none;
-    }
-`;
-
-const SocialButton = styled.button<{ bgColor?: string }>`
+const SocialButton = styled.button<{ $bgColor?: string }>`
     width: 100%;
     padding: 10px;
     margin-top: 10px;
@@ -75,7 +44,7 @@ const SocialButton = styled.button<{ bgColor?: string }>`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${({ bgColor }) => bgColor || '#fff'};
+    background-color: ${({ $bgColor }) => $bgColor || '#fff'};
     cursor: pointer;
     color: #6e56cf;
 `;
@@ -110,9 +79,9 @@ const LoginForm: React.FC = () => {
         <LoginBox>
         <form onSubmit={handleLogin}>
             <StyledLabel>이메일</StyledLabel>
-            <Input type="email" placeholder="woody@playlist.io" value={email} onChange={e => setEmail(e.target.value)} required />
+            <Input type="email" placeholder="woody@playlist.io" value={email} onChange={e => setEmail(e.target.value)} required autoComplete="email"/>
             <StyledLabel>비밀번호</StyledLabel>
-            <Input type="password" placeholder="***********" value={password} onChange={e => setPassword(e.target.value)} required />
+            <Input type="password" placeholder="***********" value={password} onChange={e => setPassword(e.target.value)} required autoComplete="current-password" />
             <LoginButton type="submit">로그인</LoginButton>
         </form>
         <TextLink>
@@ -126,10 +95,10 @@ const LoginForm: React.FC = () => {
 
         <hr style={{ margin: '15px 0' }} />
 
-        <SocialButton bgColor="#E6E6E6">
+        <SocialButton $bgColor="#E6E6E6">
             Google로 계속하기
         </SocialButton>
-        <SocialButton bgColor="#fee500">
+        <SocialButton $bgColor="#fee500">
             Kakao로 계속하기
         </SocialButton>
         </LoginBox>
