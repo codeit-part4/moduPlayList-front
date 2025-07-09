@@ -26,7 +26,6 @@ const App: React.FC = () => {
           <Route path="/playList" element={<PlayListPage />} />
           <Route path="/playList/:playListId" element={<PlayListDetailPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          {/* 필요시 페이지 더 추가 */}
         </Route>
       </Routes>
     </Router>

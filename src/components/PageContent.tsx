@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 const PageContentContainer = styled.div`
     flex: 1;
+    height: 0;
+    overflow-y: auto;
     padding: 24px;
 `;
 
