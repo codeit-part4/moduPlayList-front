@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../api';
 
 const LoginContainer = styled.div`
     display: flex;
@@ -65,15 +66,41 @@ const SocialButton = styled.button<{ bgColor?: string }>`
 `;
 
 const LoginForm: React.FC = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            if (res.ok) {
+                const data = await res.json();
+                localStorage.setItem('accessToken', data.accessToken);
+                navigate('/home');
+            } else {
+                const data = await res.json();
+                alert(data.message || '로그인에 실패했습니다');
+            }
+        } catch (err) {
+            alert('서버와 연결할 수 없습니다');
+        }
+    };
+
     return (
     <LoginContainer>
         <LoginBox>
-        <label>이메일</label>
-        <Input type="email" placeholder="woody@playlist.io" />
-        <label>비밀번호</label>
-        <Input type="password" placeholder="***********" />
-        <LoginButton>로그인</LoginButton>
-
+        <form onSubmit={handleLogin}>
+            <label>이메일</label>
+            <Input type="email" placeholder="woody@playlist.io" value={email} onChange={e => setEmail(e.target.value)} required />
+            <label>비밀번호</label>
+            <Input type="password" placeholder="***********" value={password} onChange={e => setPassword(e.target.value)} required />
+            <LoginButton type="submit">로그인</LoginButton>
+        </form>
         <TextLink>
             <div>
             <a href="#">비밀번호를 잊어버리셨나요?</a>
