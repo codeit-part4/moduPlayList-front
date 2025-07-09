@@ -43,6 +43,7 @@ const Title = styled.div`
   font-weight: bold;
   font-size: 16px;
   margin-bottom: 4px;
+    color: #333;
 `;
 
 const Description = styled.div`
@@ -55,6 +56,7 @@ const Rating = styled.div`
   font-size: 15px;
   font-weight: bold;
   margin-bottom: 4px;
+    color: red;
 `;
 
 const Viewers = styled.div`
@@ -77,4 +79,4 @@ const ContentCard: React.FC<ContentCardProps> = ({ image, category, title, descr
   </Card>
 );
 
-export default ContentCard; 
+export default ContentCard;

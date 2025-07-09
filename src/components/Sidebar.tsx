@@ -2,25 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 
 const SidebarContainer = styled.div`
-    width: 220px;
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-right: 1px solid #ddd;
+        width: 220px;
+        padding: 20px;
+        border-right: 1px solid #ddd;
 `;
 
 const MenuItem = styled.div`
-    margin-bottom: 16px;
-    font-size: 14px;
-    cursor: pointer;
+        margin-bottom: 16px;
+        font-size: 14px;
+        cursor: pointer;
 
-    &:hover {
-        color: #6e56cf;
-    }
+        &:hover {
+                color: #866bff;
+        }
 `;
 
 const Sidebar: React.FC = () => (
     <SidebarContainer>
-        <h3>모두의 플리</h3>
+        <h2>모두의 플리</h2>
         <MenuItem>⭐ 콘텐츠 같이 보기</MenuItem>
         <MenuItem>⭐ 플레이 리스트</MenuItem>
         <MenuItem>⭐ 프로필</MenuItem>
@@ -28,4 +27,4 @@ const Sidebar: React.FC = () => (
     </SidebarContainer>
 );
 
-export default Sidebar; 
+export default Sidebar;

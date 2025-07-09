@@ -25,4 +25,4 @@ const ContentSearchBar: React.FC = () => {
   );
 };
 
-export default ContentSearchBar; 
+export default ContentSearchBar;
