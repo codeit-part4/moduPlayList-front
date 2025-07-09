@@ -9,7 +9,7 @@ const LoginContainer = styled.div`
     align-items: center;
     min-height: 100vh;
     width: 100vw; /* 가로 전체 차지 */
-    background-color: #fafafa;
+    background-color: #AAAAAA;
     overflow-x: hidden; /* 가로 스크롤 방지 (선택사항) */
 `;
 
@@ -21,11 +21,25 @@ const LoginBox = styled.div`
     background-color: white;
 `;
 
+const StyledLabel = styled.label`
+    display: block;
+    color: #333; /* 라벨 텍스트 색상 */
+    font-size: 14px;
+    font-weight: 600; /* 글자 두께 */
+    margin-bottom: 8px; /* 라벨과 입력창 사이의 간격 */
+
+    /* 첫 번째 라벨을 제외한 나머지 라벨에 위쪽 여백 추가 */
+    &:not(:first-child) {
+        margin-top: 8px;
+    }
+`;
+
 const Input = styled.input`
     width: 100%;
     padding: 10px;
-    margin-top: 10px;
     font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
 `;
 
 const LoginButton = styled.button`
@@ -63,6 +77,7 @@ const SocialButton = styled.button<{ bgColor?: string }>`
     justify-content: center;
     background-color: ${({ bgColor }) => bgColor || '#fff'};
     cursor: pointer;
+    color: #6e56cf;
 `;
 
 const LoginForm: React.FC = () => {
@@ -94,9 +109,9 @@ const LoginForm: React.FC = () => {
     <LoginContainer>
         <LoginBox>
         <form onSubmit={handleLogin}>
-            <label>이메일</label>
+            <StyledLabel>이메일</StyledLabel>
             <Input type="email" placeholder="woody@playlist.io" value={email} onChange={e => setEmail(e.target.value)} required />
-            <label>비밀번호</label>
+            <StyledLabel>비밀번호</StyledLabel>
             <Input type="password" placeholder="***********" value={password} onChange={e => setPassword(e.target.value)} required />
             <LoginButton type="submit">로그인</LoginButton>
         </form>
@@ -109,9 +124,9 @@ const LoginForm: React.FC = () => {
             </div>
         </TextLink>
 
-        <hr style={{ margin: '20px 0' }} />
+        <hr style={{ margin: '15px 0' }} />
 
-        <SocialButton>
+        <SocialButton bgColor="#E6E6E6">
             Google로 계속하기
         </SocialButton>
         <SocialButton bgColor="#fee500">
