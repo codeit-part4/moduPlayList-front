@@ -76,11 +76,10 @@ const LoginForm: React.FC = () => {
             const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password }),
+                credentials: 'include', // HttpOnly 쿠키 사용
             });
             if (res.ok) {
-                const data = await res.json();
-                localStorage.setItem('accessToken', data.accessToken);
                 navigate('/home');
             } else {
                 const data = await res.json();
