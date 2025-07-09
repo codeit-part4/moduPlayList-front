@@ -2,11 +2,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { API_BASE_URL } from '../api'
-import { StyledLabel } from './StyledLabel.tsx'
-import { TextLink } from './TextLink.tsx'
-import { Input } from './Input.tsx'
-import { BoxTitle } from './BoxTitle.tsx'
+import { API_BASE_URL } from '../../api.ts'
+import { StyledLabel } from '../common/StyledLabel.tsx'
+import { TextLink } from '../TextLink.tsx'
+import { Input } from '../common/Input.tsx'
+import { BoxTitle } from '../common/BoxTitle.tsx'
 
 const RegisterContainer = styled.div`
     display: flex;
@@ -77,7 +77,7 @@ const RegisterForm: React.FC = () => {
             <Button type="submit">가입하기</Button>
         </form>
         <TextLink>
-            이미 계정이 있으신가요? <a href="/">로그인</a>
+            이미 계정이 있으신가요? <a href="/public">로그인</a>
         </TextLink>
         </RegisterBox>
     </RegisterContainer>
