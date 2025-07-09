@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from '../api';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Link, useNavigate } from 'react-router-dom'
+import { API_BASE_URL } from '../api'
+import { StyledLabel } from './StyledLabel.tsx'
+import { TextLink } from './TextLink.tsx'
+import { Input } from './Input.tsx'
 
 const LoginContainer = styled.div`
     display: flex;
@@ -9,7 +12,7 @@ const LoginContainer = styled.div`
     align-items: center;
     min-height: 100vh;
     width: 100vw; /* 가로 전체 차지 */
-    background-color: #fafafa;
+    background-color: #AAAAAA;
     overflow-x: hidden; /* 가로 스크롤 방지 (선택사항) */
 `;
 
@@ -19,13 +22,6 @@ const LoginBox = styled.div`
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: white;
-`;
-
-const Input = styled.input`
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 14px;
 `;
 
 const LoginButton = styled.button`
@@ -39,20 +35,7 @@ const LoginButton = styled.button`
     cursor: pointer;
 `;
 
-const TextLink = styled.div`
-    text-align: center;
-    margin-top: 10px;
-    font-size: 12px;
-    color: #666;
-
-    a {
-    margin: 0 4px;
-    color: #6e56cf;
-    text-decoration: none;
-    }
-`;
-
-const SocialButton = styled.button<{ bgColor?: string }>`
+const SocialButton = styled.button<{ $bgColor?: string }>`
     width: 100%;
     padding: 10px;
     margin-top: 10px;
@@ -61,8 +44,9 @@ const SocialButton = styled.button<{ bgColor?: string }>`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${({ bgColor }) => bgColor || '#fff'};
+    background-color: ${({ $bgColor }) => $bgColor || '#fff'};
     cursor: pointer;
+    color: #6e56cf;
 `;
 
 const LoginForm: React.FC = () => {
@@ -95,10 +79,10 @@ const LoginForm: React.FC = () => {
     <LoginContainer>
         <LoginBox>
         <form onSubmit={handleLogin}>
-            <label>이메일</label>
-            <Input type="email" placeholder="woody@playlist.io" value={email} onChange={e => setEmail(e.target.value)} required />
-            <label>비밀번호</label>
-            <Input type="password" placeholder="***********" value={password} onChange={e => setPassword(e.target.value)} required />
+            <StyledLabel>이메일</StyledLabel>
+            <Input type="email" placeholder="woody@playlist.io" value={email} onChange={e => setEmail(e.target.value)} required autoComplete="email"/>
+            <StyledLabel>비밀번호</StyledLabel>
+            <Input type="password" placeholder="***********" value={password} onChange={e => setPassword(e.target.value)} required autoComplete="current-password" />
             <LoginButton type="submit">로그인</LoginButton>
         </form>
         <TextLink>
@@ -110,12 +94,12 @@ const LoginForm: React.FC = () => {
             </div>
         </TextLink>
 
-        <hr style={{ margin: '20px 0' }} />
+        <hr style={{ margin: '15px 0' }} />
 
-        <SocialButton>
+        <SocialButton $bgColor="#E6E6E6">
             Google로 계속하기
         </SocialButton>
-        <SocialButton bgColor="#fee500">
+        <SocialButton $bgColor="#fee500">
             Kakao로 계속하기
         </SocialButton>
         </LoginBox>
