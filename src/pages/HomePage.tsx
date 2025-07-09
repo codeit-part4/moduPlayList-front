@@ -21,8 +21,8 @@ const CardGrid = styled.div`
 
 const dummyContents = [
   { category: '(카테고리)', title: '{콘텐츠 제목}', description: '(콘텐츠 설명)', rating: 4.7, viewers: 0, image: '' },
-  { category: '(카테고리)', title: '{콘텐츠 제목}', description: '(콘텐츠 설명)', rating: 4.7, viewers: 0, image: '' },
-  { category: '(카테고리)', title: '{콘텐츠 제목}', description: '(콘텐츠 설명)', rating: 4.7, viewers: 0, image: '' },
+  { category: '(카테고리)', title: '{콘텐츠 제목}', description: '(콘텐츠 설명)', rating: 3.0, viewers: 0, image: '' },
+  { category: '(카테고리)', title: '{콘텐츠 제목}', description: '(콘텐츠 설명)', rating: 1.0, viewers: 0, image: '' },
   { category: '(카테고리)', title: '{콘텐츠 제목}', description: '(콘텐츠 설명)', rating: 4.7, viewers: 0, image: '' },
   { category: '(카테고리)', title: '{콘텐츠 제목}', description: '(콘텐츠 설명)', rating: 4.7, viewers: 0, image: '' },
   { category: '(카테고리)', title: '{콘텐츠 제목}', description: '(콘텐츠 설명)', rating: 4.7, viewers: 0, image: '' },

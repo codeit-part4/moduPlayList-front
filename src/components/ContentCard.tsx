@@ -52,11 +52,19 @@ const Description = styled.div`
   margin-bottom: 8px;
 `;
 
-const Rating = styled.div`
+const Rating = styled.div<{ score : number }>`
   font-size: 15px;
   font-weight: bold;
   margin-bottom: 4px;
-    color: red;
+    color: ${({ score }) => {
+        if (score >= 4.0) {
+            return 'red'; // 4.0 이상이면 빨간색
+        } else if (score >= 2.0) {
+            return 'black'; // 2.0 이상이면 검은색
+        } else {
+            return 'gray'; // 그 외 (2.0 미만)는 회색
+        }
+    }};
 `;
 
 const Viewers = styled.div`
@@ -73,7 +81,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ image, category, title, descr
       <Category>{category}</Category>
       <Title>{title}</Title>
       <Description>{description}</Description>
-      <Rating>{rating} <span style={{ fontWeight: 'normal', fontSize: '13px' }}>(113)</span></Rating>
+      <Rating score={rating}>{rating.toFixed(1)} <span style={{ fontWeight: 'normal', fontSize: '13px' }}>(113)</span></Rating>
       <Viewers>지금 {viewers}명이 보고 있어요.</Viewers>
     </CardBody>
   </Card>
