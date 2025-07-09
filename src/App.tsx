@@ -25,7 +25,9 @@ const App: React.FC = () => {
           <Route path="/content/:contentId/reviews" element={<ContentReviewsPage />} />
           <Route path="/playList" element={<PlayListPage />} />
           <Route path="/playList/:playListId" element={<PlayListDetailPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          {/* <Route path="/profile" element={<ProfilePage />} /> 삭제 */}
+          <Route path=":userName" element={<ProfilePage />} />
+          {/* 필요시 페이지 더 추가 */}
         </Route>
       </Routes>
     </Router>

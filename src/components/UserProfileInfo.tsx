@@ -50,19 +50,28 @@ const Status = styled.div`
   margin-top: 8px;
 `;
 
-const UserProfileInfo: React.FC = () => (
-  <ProfileBox>
-    <Avatar />
-    <Info>
-      <Name>woody</Name>
-      <Follow>팔로워 000  팔로잉 000</Follow>
-      <BtnGroup>
-        <Btn>팔로우</Btn>
-        <Btn style={{ background: '#e5e7eb', color: '#222' }}>메시지 보내기</Btn>
-      </BtnGroup>
-      <Status>지금 <b>인셉션</b>을 보고 있습니다.</Status>
-    </Info>
-  </ProfileBox>
-);
+interface UserProfileInfoProps {
+  isMe: boolean;
+  name: string;
+}
+
+const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name }) => {
+  return (
+    <ProfileBox>
+      <Avatar />
+      <Info>
+        <Name>{name}</Name>
+        <Follow>팔로워 000  팔로잉 000</Follow>
+        {!isMe && (
+          <BtnGroup>
+            <Btn>팔로우</Btn>
+            <Btn style={{ background: '#e5e7eb', color: '#222' }}>메시지 보내기</Btn>
+          </BtnGroup>
+        )}
+        <Status>지금 <b>인셉션</b>을 보고 있습니다.</Status>
+      </Info>
+    </ProfileBox>
+  );
+};
 
 export default UserProfileInfo; 
