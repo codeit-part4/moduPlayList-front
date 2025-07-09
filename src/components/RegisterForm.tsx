@@ -1,6 +1,8 @@
 // src/components/RegisterForm.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../api';
 
 const RegisterContainer = styled.div`
     display: flex;
@@ -69,18 +71,44 @@ const SocialButton = styled.button<{ bgColor?: string }>`
 `;
 
 const RegisterForm: React.FC = () => {
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const handleRegister = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/users`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password })
+            });
+            if (res.ok) {
+                alert('회원가입이 완료되었습니다');
+                navigate('/');
+            } else {
+                const data = await res.json();
+                alert(data.message || '회원가입에 실패했습니다');
+            }
+        } catch (err) {
+            alert('서버와 연결할 수 없습니다');
+        }
+    };
+
     return (
     <RegisterContainer>
         <RegisterBox>
-        <label>이메일</label>
-        <Input type="email" placeholder="woody@playlist.io" />
-        <label>이름</label>
-        <Input type="text" placeholder="woody" />
-        <label>비밀번호</label>
-        <Input type="password" placeholder="***********" />
+        <form onSubmit={handleRegister}>
+            <label>이메일</label>
+            <Input type="email" placeholder="woody@playlist.io" value={email} onChange={e => setEmail(e.target.value)} required />
+            <label>이름</label>
+            <Input type="text" placeholder="woody" value={name} onChange={e => setName(e.target.value)} required />
+            <label>비밀번호</label>
+            <Input type="password" placeholder="***********" value={password} onChange={e => setPassword(e.target.value)} required />
 
-        <Button>가입하기</Button>
-
+            <Button type="submit">가입하기</Button>
+        </form>
         <LinkText>
             이미 계정이 있으신가요? <a href="/">로그인</a>
         </LinkText>
