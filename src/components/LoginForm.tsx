@@ -5,6 +5,7 @@ import { API_BASE_URL } from '../api'
 import { StyledLabel } from './StyledLabel.tsx'
 import { TextLink } from './TextLink.tsx'
 import { Input } from './Input.tsx'
+import { BoxTitle } from './BoxTitle.tsx'
 
 const LoginContainer = styled.div`
     display: flex;
@@ -77,6 +78,7 @@ const LoginForm: React.FC = () => {
     return (
     <LoginContainer>
         <LoginBox>
+            <BoxTitle>로그인</BoxTitle>
         <form onSubmit={handleLogin}>
             <StyledLabel>이메일</StyledLabel>
             <Input type="email" placeholder="woody@playlist.io" value={email} onChange={e => setEmail(e.target.value)} required autoComplete="email"/>

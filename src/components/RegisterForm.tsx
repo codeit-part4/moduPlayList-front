@@ -1,11 +1,12 @@
 // src/components/RegisterForm.tsx
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from '../api';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
+import { API_BASE_URL } from '../api'
 import { StyledLabel } from './StyledLabel.tsx'
 import { TextLink } from './TextLink.tsx'
 import { Input } from './Input.tsx'
+import { BoxTitle } from './BoxTitle.tsx'
 
 const RegisterContainer = styled.div`
     display: flex;
@@ -33,6 +34,7 @@ const Button = styled.button`
     border-radius: 6px;
     cursor: pointer;
 `;
+
 
 const RegisterForm: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -63,6 +65,7 @@ const RegisterForm: React.FC = () => {
     return (
     <RegisterContainer>
         <RegisterBox>
+        <BoxTitle>회원가입</BoxTitle>
         <form onSubmit={handleRegister}>
             <StyledLabel>이메일</StyledLabel>
             <Input type="email" placeholder="woody@playlist.io" value={email} onChange={e => setEmail(e.target.value)} required />
