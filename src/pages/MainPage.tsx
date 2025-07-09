@@ -1,6 +1,6 @@
 import React from 'react';
-import ContentSearchBar from '../components/ContentSearchBar';
-import ContentCard from '../components/ContentCard';
+import ContentSearchBar from '../components/content/ContentSearchBar.tsx';
+import ContentCard from '../components/content/ContentCard.tsx';
 import styled from 'styled-components';
 
 const CardGrid = styled.div`
@@ -33,4 +33,4 @@ const MainPage: React.FC = () => {
   );
 };
 
-export default MainPage; 
+export default MainPage;
