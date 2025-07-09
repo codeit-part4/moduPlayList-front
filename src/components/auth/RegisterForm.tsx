@@ -14,7 +14,6 @@ const RegisterContainer = styled.div`
     align-items: center;
     min-height: 100vh;
     width: 100vw;
-    background-color: #AAAAAA;
     `;
 
 const RegisterBox = styled.div`
@@ -22,7 +21,8 @@ const RegisterBox = styled.div`
     padding: 40px;
     border-radius: 8px;
     border: 1px solid #ccc;
-    background-color: #fff;
+    background-color: var(--container-bg-color);
+    
 `;
 
 const Button = styled.button`  
@@ -77,7 +77,7 @@ const RegisterForm: React.FC = () => {
             <Button type="submit">가입하기</Button>
         </form>
         <TextLink>
-            이미 계정이 있으신가요? <a href="/public">로그인</a>
+            이미 계정이 있으신가요? <a href="/">로그인</a>
         </TextLink>
         </RegisterBox>
     </RegisterContainer>

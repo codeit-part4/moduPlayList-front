@@ -13,7 +13,6 @@ const LoginContainer = styled.div`
     align-items: center;
     min-height: 100vh;
     width: 100vw; /* 가로 전체 차지 */
-    background-color: #AAAAAA;
     overflow-x: hidden; /* 가로 스크롤 방지 (선택사항) */
 `;
 
@@ -22,13 +21,12 @@ const LoginBox = styled.div`
     padding: 40px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    background-color: white;
+    background-color: var(--container-bg-color);
 `;
 
 const LoginButton = styled.button`
     width: 100%;
     background-color: #6e56cf;
-    color: white;
     padding: 10px;
     margin-top: 20px;
     border: none;
