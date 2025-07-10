@@ -4,6 +4,7 @@ import { API_BASE_URL } from '../api.ts';
 import { useNavigate } from 'react-router-dom';
 import ContentCard from '../components/ContentCard';
 import ContentSearchBar from '../components/ContentSearchBar';
+import { dummyContents } from '../data/contents.ts';
 
 const Container = styled.div`
     width: 100%;
@@ -44,7 +45,7 @@ const FormGroup = styled.div`
 `;
 
 const SearchSection = styled.div`
-    margin: 32px 0 16px 0;
+    margin: 0 0 16px 0;
 `;
 
 const ContentListContainer = styled.div`
@@ -87,7 +88,7 @@ const SelectedItems = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin: 16px 0;
+    margin: 8px 0;
     min-height: 40px; // 최소 높이 설정
 `;
 
@@ -145,82 +146,9 @@ const PlayListCreatePage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isPublic, setIsPublic] = useState(true);
-  const [selectedContents, setSelectedContents] = useState<Array<{ id: number, title: string }>>([]);
+  const [selectedContents, setSelectedContents] = useState<Array<{ id: string, title: string }>>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [contents] = useState([
-    {
-      id: 1,
-      title: 'React 기초 마스터하기',
-      description: '리액트의 핵심 개념과 실전 활용법을 배워보세요',
-      category: '프로그래밍',
-      rating: 4.8,
-      viewers: 1234,
-      image: 'https://picsum.photos/seed/react/200/300'
-    },
-    {
-      id: 2,
-      title: 'UX/UI 디자인 원칙',
-      description: '사용자 중심의 인터페이스 디자인 가이드',
-      category: '디자인',
-      rating: 4.7,
-      viewers: 856,
-      image: 'https://picsum.photos/seed/design/200/300'
-    },
-    {
-      id: 3,
-      title: '디지털 마케팅 전략',
-      description: '효과적인 온라인 마케팅 전략 수립하기',
-      category: '마케팅',
-      rating: 4.5,
-      viewers: 673,
-      image: 'https://picsum.photos/seed/marketing/200/300'
-    },
-    {
-      id: 4,
-      title: 'TypeScript 실전 프로젝트',
-      description: '타입스크립트로 안전한 코드 작성하기',
-      category: '프로그래밍',
-      rating: 4.9,
-      viewers: 892,
-      image: 'https://picsum.photos/seed/typescript/200/300'
-    },
-    {
-      id: 5,
-      title: '모션 그래픽 기초',
-      description: 'After Effects를 활용한 모션 디자인',
-      category: '디자인',
-      rating: 4.6,
-      viewers: 445,
-      image: 'https://picsum.photos/seed/motion/200/300'
-    },
-    {
-      id: 6,
-      title: '데이터 분석 입문',
-      description: 'Python을 활용한 데이터 분석 기초',
-      category: '데이터',
-      rating: 4.7,
-      viewers: 1023,
-      image: 'https://picsum.photos/seed/data/200/300'
-    },
-    {
-      id: 7,
-      title: '웹 보안 기초',
-      description: '웹 애플리케이션 보안 위협과 대응 방안',
-      category: '보안',
-      rating: 4.8,
-      viewers: 567,
-      image: 'https://picsum.photos/seed/security/200/300'
-    },
-    {
-      id: 8,
-      title: '클라우드 서비스 구축',
-      description: 'AWS를 활용한 클라우드 인프라 구축',
-      category: '클라우드',
-      rating: 4.6,
-      viewers: 789,
-      image: 'https://picsum.photos/seed/cloud/200/300'
-    }
-  ]);
+  const [contents] = useState(dummyContents);
   const navigate = useNavigate();
 
   const filteredContents = contents.filter(content =>
@@ -265,6 +193,7 @@ const PlayListCreatePage: React.FC = () => {
 
   return (
     <Container>
+      <h2>플레이리스트 추가하기</h2>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label>플레이리스트 제목</Label>
@@ -325,12 +254,14 @@ const PlayListCreatePage: React.FC = () => {
                 {selectedContents.some(item => item.id === content.id) && '✓'}
               </CheckboxOverlay>
               <ContentCard
+                id={content.id}
                 image={content.image}
                 category={content.category}
                 title={content.title}
                 description={content.description}
                 rating={content.rating}
                 viewers={content.viewers}
+                disableClick={true}
               />
             </ContentWrapper>
           ))}

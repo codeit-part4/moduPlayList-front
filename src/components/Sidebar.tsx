@@ -34,9 +34,9 @@ const Sidebar: React.FC = () => (
     <SidebarContainer>
         <h2>모두의 플리</h2>
         <MenuItem to={'/home'}>⭐ 콘텐츠 같이 보기</MenuItem>
-        <MenuItem to={'/playList'}>⭐ 플레이 리스트</MenuItem>
-        <MenuItem to={"/profile"}>⭐ 프로필</MenuItem>
-        <MenuItem to={"/profile"}>⭐ 사용자 관리</MenuItem>
+        <MenuItem to={'/playlists'}>⭐ 플레이 리스트</MenuItem>
+        <MenuItem to={"/profiles"}>⭐ 프로필</MenuItem>
+        <MenuItem to={"/profiles"}>⭐ 사용자 관리</MenuItem>
     </SidebarContainer>
 );
 

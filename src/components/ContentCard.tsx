@@ -11,6 +11,7 @@ interface ContentCardProps {
   description: string;
   rating: number;
   viewers: number;
+  disableClick?: boolean;
 }
 
 const Card = styled.div`
@@ -60,6 +61,7 @@ const Description = styled.div`
   color: #888;
   font-size: 13px;
   margin-bottom: 8px;
+  height: 40px;
 `;
 
 const Viewers = styled.div`
@@ -67,12 +69,18 @@ const Viewers = styled.div`
   font-size: 12px;
 `;
 
-const ContentCard: React.FC<ContentCardProps> = ({ id, image, category, title, description, rating, viewers }) => {
+const ContentCard: React.FC<ContentCardProps> = ({ id, image, category, title, description, rating, viewers, disableClick
+}) => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate(`/content/${id}`);
+  const handleClick = (e: React.MouseEvent) => {
+    if (disableClick) {
+      e.preventDefault();
+      return;
+    }
+    navigate(`/contents/${id}`);
   };
+
 
 
   return (
