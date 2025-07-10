@@ -23,7 +23,9 @@ const dummyContents = [
 const MainPage: React.FC = () => {
   return (
     <div>
-      <ContentSearchBar />
+      <ContentSearchBar onSearch={function(): void {
+              throw new Error('Function not implemented.');
+          } } />
       <CardGrid>
         {dummyContents.map((item, idx) => (
           <ContentCard key={idx} {...item} />

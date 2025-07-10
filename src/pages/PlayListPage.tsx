@@ -23,7 +23,9 @@ const dummyPlayLists = [
 const PlayListPage: React.FC = () => {
   return (
     <div>
-      <ContentSearchBar />
+      <ContentSearchBar onSearch={function(): void {
+              throw new Error('Function not implemented.');
+          } } />
       <CardGrid>
         {dummyPlayLists.map((item, idx) => (
           <PlayListCard key={idx} {...item} />

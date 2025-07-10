@@ -9,6 +9,7 @@ import ContentReviewsPage from './pages/ContentReviewsPage';
 import PlayListPage from './pages/PlayListPage';
 import PlayListDetailPage from './pages/PlayListDetailPage';
 import ProfilePage from './pages/ProfilePage';
+import PlayListCreatePage from './pages/PlalistCreatePage.tsx';
 
 const App: React.FC = () => {
   return (
@@ -23,9 +24,11 @@ const App: React.FC = () => {
           <Route path="/home" element={<HomePage />} />
           <Route path="/content/:contentId" element={<ContentPage />} />
           <Route path="/content/:contentId/reviews" element={<ContentReviewsPage />} />
-          <Route path="/playList" element={<PlayListPage />} />
-          <Route path="/playList/:playListId" element={<PlayListDetailPage />} />
+          <Route path="/playlist" element={<PlayListPage />} />
+          <Route path="/playlist/:playListId" element={<PlayListDetailPage />} />
+          <Route path="/playlist/new" element={<PlayListCreatePage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/:userId" element={<ProfilePage />} />
         </Route>
       </Routes>
     </Router>
