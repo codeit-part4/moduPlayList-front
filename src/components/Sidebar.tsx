@@ -3,9 +3,16 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom'
 
 const SidebarContainer = styled.div`
-        width: 220px;
-        padding: 20px;
-        border-right: 1px solid #ddd;
+    width: 190px;
+    min-width: 190px;
+    border-right: 1px solid #e9ecef;
+    padding: 20px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto; // 내용이 많을 경우 스크롤 가능하도록
 `;
 
 const MenuItem = styled(Link)`
