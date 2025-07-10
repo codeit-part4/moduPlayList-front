@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { InputBox } from './common/InputBox.tsx'
+import { Avatar } from './common/Avatar.tsx'
 
 const Container = styled.div`
-  background: #fafafa;
   border: 1px solid #eee;
   border-radius: 8px;
   padding: 16px;
@@ -13,15 +14,8 @@ const Title = styled.div`
   margin-bottom: 8px;
 `;
 
-const SearchBox = styled.input`
-  width: 100%;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px;
-`;
-
 const UserList = styled.div`
+  margin-top: 10px;
   max-height: 180px;
   overflow-y: auto;
 `;
@@ -29,15 +23,11 @@ const UserList = styled.div`
 const UserItem = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
-`;
-
-const Avatar = styled.div`
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #bbb;
-  margin-right: 8px;
+  margin: 6px 0;
+  gap: 8px;
+  background-color: var(--chat-message-bg);
+  border-radius: 12px;
+  padding: 5px 12px;
 `;
 
 const UserName = styled.div`
@@ -50,8 +40,8 @@ const dummyUsers = [
 
 const ParticipantList: React.FC = () => (
   <Container>
-    <Title>000명 시청 중</Title>
-    <SearchBox placeholder="사용자 검색" />
+    <Title>{dummyUsers.length}명 시청 중</Title>
+    <InputBox placeholder="사용자 검색" />
     <UserList>
       {dummyUsers.map((name, idx) => (
         <UserItem key={idx}>
@@ -63,4 +53,4 @@ const ParticipantList: React.FC = () => (
   </Container>
 );
 
-export default ParticipantList; 
+export default ParticipantList;

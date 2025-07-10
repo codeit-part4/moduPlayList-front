@@ -1,10 +1,10 @@
 // src/layouts/MainLayout.tsx
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Sidebar from '../components/layout/Sidebar.tsx';
-import Topbar from '../components/layout/Topbar.tsx';
-import PageContent from '../components/common/PageContent.tsx';
 import styled from 'styled-components';
+import Sidebar from '../components/Sidebar.tsx'
+import Topbar from '../components/Topbar.tsx'
+import PageContent from '../components/PageContent.tsx'
 
 const LayoutContainer = styled.div`
     display: flex;

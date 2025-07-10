@@ -1,12 +1,11 @@
-// src/components/RegisterForm.tsx
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { API_BASE_URL } from '../../api.ts'
 import { StyledLabel } from '../common/StyledLabel.tsx'
-import { TextLink } from '../common/TextLink.tsx'
 import { Input } from '../common/Input.tsx'
 import { BoxTitle } from '../common/BoxTitle.tsx'
+import { TextLink } from '../TextLink.tsx'
 
 const RegisterContainer = styled.div`
     display: flex;

@@ -5,7 +5,7 @@ import { API_BASE_URL } from '../../api.ts'
 import { StyledLabel } from '../common/StyledLabel.tsx'
 import { Input } from '../common/Input.tsx'
 import { BoxTitle } from '../common/BoxTitle.tsx'
-import { TextLink } from '../common/TextLink.tsx'
+import { TextLink } from '../TextLink.tsx'
 
 const LoginContainer = styled.div`
     display: flex;

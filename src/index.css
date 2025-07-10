@@ -8,6 +8,7 @@
   background-color: #333333;
   --container-bg-color: #808080;
   --text-color-help: #cccccc;
+  --chat-message-bg: #555555;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -69,6 +70,7 @@ button:focus-visible {
     background-color: #ffffff;
     --container-bg-color: #f2f2f2;
     --text-color-help: #555555;
+    --chat-message-bg: #cccccc;
   }
   a:hover {
     color: #747bff;

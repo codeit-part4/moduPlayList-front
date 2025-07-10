@@ -38,4 +38,4 @@ const PlayListDetailPage: React.FC = () => {
   );
 };
 
-export default PlayListDetailPage; 
+export default PlayListDetailPage;
