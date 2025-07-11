@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const TopbarContainer = styled.div`
     height: 60px;
-    background-color: #fafafa;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -30,4 +29,4 @@ const Topbar: React.FC = () => (
     </TopbarContainer>
 );
 
-export default Topbar; 
+export default Topbar;

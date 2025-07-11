@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
 import { API_BASE_URL } from '../../api.ts'
 import { StyledLabel } from '../common/StyledLabel.tsx'
-import { TextLink } from '../TextLink.tsx'
 import { Input } from '../common/Input.tsx'
 import { BoxTitle } from '../common/BoxTitle.tsx'
+import { TextLink } from '../TextLink.tsx'
 
 const LoginContainer = styled.div`
     display: flex;

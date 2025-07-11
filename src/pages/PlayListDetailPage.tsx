@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PlayListInfo from '../components/PlayListInfo';
 import ContentCard from '../components/ContentCard';
+import { dummyContents } from '../data/contents.ts';
 
 const Section = styled.div`
   margin-bottom: 32px;
@@ -12,13 +13,6 @@ const CardGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 40px;
 `;
-
-const dummyContents = [
-  { category: '(카테고리)', title: '{콘텐츠 제목}', description: '(콘텐츠 설명)', rating: 4.7, viewers: 0, image: '' },
-  { category: '(카테고리)', title: '{콘텐츠 제목}', description: '(콘텐츠 설명)', rating: 4.7, viewers: 0, image: '' },
-  { category: '(카테고리)', title: '{콘텐츠 제목}', description: '(콘텐츠 설명)', rating: 4.7, viewers: 0, image: '' },
-  { category: '(카테고리)', title: '{콘텐츠 제목}', description: '(콘텐츠 설명)', rating: 4.7, viewers: 0, image: '' },
-];
 
 const PlayListDetailPage: React.FC = () => {
   return (
@@ -38,4 +32,4 @@ const PlayListDetailPage: React.FC = () => {
   );
 };
 
-export default PlayListDetailPage; 
+export default PlayListDetailPage;

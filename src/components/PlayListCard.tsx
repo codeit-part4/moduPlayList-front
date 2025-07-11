@@ -20,6 +20,7 @@ const Card = styled.div`
 `;
 
 const Title = styled.div`
+  color: #1a1a1a;
   font-weight: bold;
   font-size: 18px;
   margin-bottom: 8px;
@@ -47,4 +48,4 @@ const PlayListCard: React.FC<PlayListCardProps> = ({ title, description, updated
   </Card>
 );
 
-export default PlayListCard; 
+export default PlayListCard;
