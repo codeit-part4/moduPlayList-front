@@ -4,7 +4,7 @@ import ContentDetailInfo from '../components/ContentDetailInfo';
 import LiveChat from '../components/LiveChat';
 import ParticipantList from '../components/ParticipantList';
 import { useNavigate, useParams } from 'react-router-dom';
-import { dummyContents } from '../data/contents.ts';
+import { dummyContents } from '../type/contents.ts';
 
 const DetailLayout = styled.div`
     display: flex;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PlayListInfo from '../components/PlayListInfo';
 import ContentCard from '../components/ContentCard';
-import { dummyContents } from '../data/contents.ts';
+import { dummyContents } from '../type/contents.ts';
 
 const Section = styled.div`
   margin-bottom: 32px;

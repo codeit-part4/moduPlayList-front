@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 import ContentCard from '../ContentCard.tsx';
 import ContentSearchBar from '../ContentSearchBar.tsx';
-import type { Content } from '../../data/contents.ts';
+import type { Content } from '../../type/contents.ts';
 
 interface ContentSelectorProps {
   selectedContents: Array<{ id: string, title: string }>;

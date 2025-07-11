@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { dummyContents } from '../data/contents.ts';
+import { dummyContents } from '../type/contents.ts';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../api.ts';
 import { PlaylistForm } from '../components/playlist/PlaylistFormProps.tsx';

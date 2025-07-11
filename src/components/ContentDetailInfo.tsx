@@ -1,7 +1,7 @@
 // components/ContentDetailInfo.tsx
 import React from 'react';
 import styled from 'styled-components';
-import type { Content } from '../data/contents.ts';
+import type { Content } from '../type/contents.ts';
 import { Rating } from './common/Rating.tsx';
 
 const Container = styled.div`
