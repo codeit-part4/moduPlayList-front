@@ -10,6 +10,7 @@ import PlayListPage from './pages/PlayListPage';
 import PlayListDetailPage from './pages/PlayListDetailPage';
 import ProfilePage from './pages/ProfilePage';
 import PlayListCreatePage from './pages/PlaylistCreatePage.tsx';
+import PlaylistEditPage from './pages/PlaylistEditPage.tsx';
 
 const App: React.FC = () => {
   return (
@@ -27,6 +28,7 @@ const App: React.FC = () => {
           <Route path="/playlists" element={<PlayListPage />} />
           <Route path="/playlists/:playListId" element={<PlayListDetailPage />} />
           <Route path="/playlists/new" element={<PlayListCreatePage />} />
+          <Route path="/playlists/:playListId/edit" element={<PlaylistEditPage />} />
           <Route path="/profiles" element={<ProfilePage />} />
           <Route path="/profiles/:userId" element={<ProfilePage />} />
         </Route>

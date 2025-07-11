@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { dummyContents } from '../data/contents.ts';
-import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../api.ts';
+import styled from 'styled-components';
 import { PlaylistForm } from '../components/playlist/PlaylistFormProps.tsx';
 import { ContentSelector } from '../components/playlist/ContentSelector.tsx';
-import styled from 'styled-components';
 import { FormButton } from '../components/common/FormButton.tsx';
 
 const Container = styled.div`
@@ -13,20 +13,44 @@ const Container = styled.div`
     flex-direction: column;
 `;
 
-const PlaylistCreatePage: React.FC = () => {
+const PlaylistEditPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isPublic, setIsPublic] = useState(true);
   const [selectedContents, setSelectedContents] = useState<Array<{ id: string, title: string }>>([]);
   const [contents] = useState(dummyContents);
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    // 기존 플레이리스트 데이터 불러오기
+    const fetchPlaylist = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/playlists/${id}`, {
+          credentials: 'include',
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setTitle(data.title);
+          setDescription(data.description);
+          setIsPublic(data.isPublic);
+          setSelectedContents(data.contents);
+        }
+      } catch (err) {
+        console.error(err);
+        alert('플레이리스트를 불러올 수 없습니다');
+      }
+    };
+
+    fetchPlaylist();
+  }, [id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const payload = { title, description, isPublic, contents: selectedContents };
-      const res = await fetch(API_BASE_URL + '/api/playlists', {
-        method: 'POST',
+      const res = await fetch(`${API_BASE_URL}/api/playlists/${id}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
         credentials: 'include',
@@ -35,7 +59,7 @@ const PlaylistCreatePage: React.FC = () => {
         navigate('/playlists/my');
       } else {
         const data = await res.json();
-        alert(data.message || '생성에 실패했습니다');
+        alert(data.message || '수정에 실패했습니다');
       }
     } catch (err) {
       alert('서버와 연결할 수 없습니다');
@@ -45,7 +69,7 @@ const PlaylistCreatePage: React.FC = () => {
 
   return (
     <Container>
-      <h2>플레이리스트 추가하기</h2>
+      <h2>플레이리스트 수정하기</h2>
       <PlaylistForm
         title={title}
         description={description}
@@ -60,9 +84,9 @@ const PlaylistCreatePage: React.FC = () => {
         onSelectedContentsChange={setSelectedContents}
         contents={contents}
       />
-      <FormButton type="submit">생성하기</FormButton>
+      <FormButton type="submit">수정하기</FormButton>
     </Container>
   );
 };
 
-export default PlaylistCreatePage;
+export default PlaylistEditPage;

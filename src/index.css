@@ -6,6 +6,8 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #333333;
+  --text-color: #ffffff;
+  --text-color-dark: #000000;
   --container-bg-color: #808080;
   --text-color-help: #cccccc;
   --chat-message-bg: #555555;
@@ -76,6 +78,8 @@ button:focus-visible {
     --chat-message-bg: #cccccc;
     --selected-color: rgba(137, 107, 255, 0.82);
     --selected-color-hover: #896bff;
+    --text-color: #000000;
+    --text-color-dark: #ffffff;
   }
   a:hover {
     color: #747bff;
