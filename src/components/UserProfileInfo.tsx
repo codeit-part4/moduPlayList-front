@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { API_BASE_URL } from '../api';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileBox = styled.div`
   display: flex;
@@ -57,9 +58,32 @@ interface UserProfileInfoProps {
   followeeId?: string;
   isFollowing: boolean;
   setIsFollowing: (v: boolean) => void;
+  userId?: string;
 }
 
-const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name, followeeId, isFollowing, setIsFollowing }) => {
+const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name, followeeId, isFollowing, setIsFollowing, userId }) => {
+  const [followerCount, setFollowerCount] = useState(0);
+  const [followeeCount, setFolloweeCount] = useState(0);
+  const navigate = useNavigate();
+
+  const fetchFollowCount = () => {
+    if (!userId) return;
+    fetch(`${API_BASE_URL}/api/follows/count/${userId}`)
+      .then(res => res.ok ? res.json() : Promise.reject())
+      .then(data => {
+        setFollowerCount(data.followerCount);
+        setFolloweeCount(data.followeeCount);
+      })
+      .catch(() => {
+        setFollowerCount(0);
+        setFolloweeCount(0);
+      });
+  };
+
+  useEffect(() => {
+    fetchFollowCount();
+  }, [userId]);
+
   const handleFollow = async () => {
     if (!followeeId) return;
     const token = localStorage.getItem('accessToken');
@@ -75,6 +99,7 @@ const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name, followeeI
         });
         if (res.ok) {
           setIsFollowing(true);
+          fetchFollowCount(); // 팔로우 후 새로고침
           alert('팔로우 완료!');
         } else {
           const data = await res.json();
@@ -91,6 +116,7 @@ const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name, followeeI
         });
         if (res.ok) {
           setIsFollowing(false);
+          fetchFollowCount(); // 언팔로우 후 새로고침
           alert('언팔로우 완료!');
         } else {
           const data = await res.json();
@@ -107,7 +133,15 @@ const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name, followeeI
       <Avatar />
       <Info>
         <Name>{name}</Name>
-        <Follow>팔로워 000  팔로잉 000</Follow>
+        <Follow>
+          <span style={{ cursor: 'pointer', color: '#3b82f6', fontWeight: 'bold' }} onClick={() => navigate(`/${name}/follower`)}>
+            팔로워 {followerCount}명
+          </span>
+          &nbsp;
+          <span style={{ cursor: 'pointer', color: '#3b82f6', fontWeight: 'bold' }} onClick={() => navigate(`/${name}/followings`)}>
+            팔로잉 {followeeCount}명
+          </span>
+        </Follow>
         {!isMe && (
           <BtnGroup>
             <Btn

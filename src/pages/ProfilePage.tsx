@@ -24,12 +24,12 @@ const dummyPlayLists = [
 
 const ProfilePage: React.FC = () => {
   const { userName } = useParams();
-  const [myName, setMyName] = useState('');
   const [isMe, setIsMe] = useState(false);
   const [name, setName] = useState(userName || '');
   const [notFound, setNotFound] = useState(false);
   const [followeeId, setFolloweeId] = useState<string | undefined>(undefined);
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -41,9 +41,11 @@ const ProfilePage: React.FC = () => {
       })
         .then(res => res.ok ? res.json() : Promise.reject())
         .then(data => {
-          setMyName(data.name);
           setIsMe(data.name === userName);
-          if (data.name === userName) setName(data.name);
+          if (data.name === userName) {
+            setName(data.name);
+            setUserId(data.userid);
+          }
         })
         .catch(() => setIsMe(false));
     }
@@ -57,18 +59,23 @@ const ProfilePage: React.FC = () => {
             setNotFound(true);
             setName(userName);
             setFolloweeId(undefined);
+            setUserId(undefined);
             return null;
           }
           return res.json();
         })
         .then(data => {
           if (data && data.name) setName(data.name);
-          if (data && data.userid) setFolloweeId(data.userid);
+          if (data && data.userid) {
+            setFolloweeId(data.userid);
+            setUserId(data.userid);
+          }
         })
         .catch(() => setNotFound(true));
     } else {
       setNotFound(false);
       setFolloweeId(undefined);
+      // 내 프로필이면 userId는 위에서 이미 세팅됨
     }
   }, [isMe, userName]);
 
@@ -95,7 +102,7 @@ const ProfilePage: React.FC = () => {
   return (
     <div>
       <Section>
-        <UserProfileInfo isMe={isMe} name={name} followeeId={followeeId} isFollowing={isFollowing} setIsFollowing={setIsFollowing} />
+        <UserProfileInfo isMe={isMe} name={name} followeeId={followeeId} isFollowing={isFollowing} setIsFollowing={setIsFollowing} userId={userId} />
       </Section>
       <Section>
         <div style={{fontWeight: 'bold', fontSize: '18px', marginBottom: '16px'}}>플레이리스트</div>

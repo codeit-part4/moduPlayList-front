@@ -10,6 +10,7 @@ import PlayListPage from './pages/PlayListPage';
 import PlayListDetailPage from './pages/PlayListDetailPage';
 import ProfilePage from './pages/ProfilePage';
 import FollowingsPage from './pages/FollowingsPage';
+import FollowerPage from './pages/FollowerPage';
 
 const App: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const App: React.FC = () => {
           <Route path="/content/:contentId/reviews" element={<ContentReviewsPage />} />
           <Route path="/playList" element={<PlayListPage />} />
           <Route path="/playList/:playListId" element={<PlayListDetailPage />} />
+          <Route path=":userName/follower" element={<FollowerPage />} />
           <Route path=":userName/followings" element={<FollowingsPage />} />
           <Route path=":userName" element={<ProfilePage />} />
           {/* 필요시 페이지 더 추가 */}
