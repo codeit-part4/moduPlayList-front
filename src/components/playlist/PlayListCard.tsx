@@ -36,6 +36,7 @@ const Description = styled.p`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+    height: 40px;
 `;
 
 const UserInfo = styled.div`
