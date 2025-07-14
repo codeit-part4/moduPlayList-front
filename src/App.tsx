@@ -12,6 +12,7 @@ import ProfilePage from './pages/ProfilePage';
 import FollowingsPage from './pages/FollowingsPage';
 import FollowerPage from './pages/FollowerPage';
 import PlayListCreatePage from './pages/PlaylistCreatePage.tsx';
+import PlaylistEditPage from './pages/PlaylistEditPage.tsx';
 
 
 const App: React.FC = () => {
@@ -25,11 +26,13 @@ const App: React.FC = () => {
         {/* 로그인 이후 공통 Layout 적용 */}
         <Route element={<MainLayout />}>
           <Route path="/home" element={<HomePage />} />
+          <Route path="/contents" element={<HomePage />} />
           <Route path="/contents/:contentId" element={<ContentPage />} />
           <Route path="/contents/:contentId/reviews" element={<ContentReviewsPage />} />
           <Route path="/playlists" element={<PlayListPage />} />
           <Route path="/playlists/:playListId" element={<PlayListDetailPage />} />
           <Route path="/playlists/new" element={<PlayListCreatePage />} />
+          <Route path="/playlists/:playListId/edit" element={<PlaylistEditPage />} />
           <Route path="/profiles" element={<ProfilePage />} />
           <Route path="/profiles/:userId" element={<ProfilePage />} />
           <Route path=":userName/follower" element={<FollowerPage />} />

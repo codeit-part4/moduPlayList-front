@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import PlayListInfo from '../components/PlayListInfo';
+import PlayListInfo from '../components/playlist/PlayListInfo.tsx';
 import ContentCard from '../components/ContentCard';
-import { dummyContents } from '../data/contents.ts';
+import { dummyContents } from '../type/contents.ts';
+import { BackButton } from '../components/common/BackButton.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const Section = styled.div`
   margin-bottom: 32px;
@@ -15,8 +17,17 @@ const CardGrid = styled.div`
 `;
 
 const PlayListDetailPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div>
+      <BackButton onClick={handleBack}>
+        목록으로 돌아가기
+      </BackButton>
       <Section>
         <PlayListInfo />
       </Section>

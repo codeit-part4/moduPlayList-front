@@ -4,9 +4,8 @@ export interface Content {
   title: string;
   description: string;
   rating: number;
-  reviews: number;
-  views: number;
-  thumbnail: string;
+  viewers: number;
+  image: string;
 }
 
 export const dummyContents = [

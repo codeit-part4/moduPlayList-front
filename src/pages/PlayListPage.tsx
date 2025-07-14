@@ -1,24 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import ContentSearchBar from '../components/ContentSearchBar';
-import PlayListCard from '../components/PlayListCard';
+import PlayListCard from '../components/playlist/PlayListCard.tsx';
+import { samplePlaylistResponses } from '../type/playlists.ts';
 
 const CardGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
 `;
-
-const dummyPlayLists = [
-  { title: '시간을 다룬 영화', description: '인터스텔라, 인셉션, 테넷 등 13개의 콘텐츠', updated: '00 시간 전 업데이트 됨', subscribers: '00 명이 구독중' },
-  { title: '시간을 다룬 영화', description: '인터스텔라, 인셉션, 테넷 등 13개의 콘텐츠', updated: '00 시간 전 업데이트 됨', subscribers: '00 명이 구독중' },
-  { title: '시간을 다룬 영화', description: '인터스텔라, 인셉션, 테넷 등 13개의 콘텐츠', updated: '00 시간 전 업데이트 됨', subscribers: '00 명이 구독중' },
-  { title: '시간을 다룬 영화', description: '인터스텔라, 인셉션, 테넷 등 13개의 콘텐츠', updated: '00 시간 전 업데이트 됨', subscribers: '00 명이 구독중' },
-  { title: '시간을 다룬 영화', description: '인터스텔라, 인셉션, 테넷 등 13개의 콘텐츠', updated: '00 시간 전 업데이트 됨', subscribers: '00 명이 구독중' },
-  { title: '시간을 다룬 영화', description: '인터스텔라, 인셉션, 테넷 등 13개의 콘텐츠', updated: '00 시간 전 업데이트 됨', subscribers: '00 명이 구독중' },
-  { title: '시간을 다룬 영화', description: '인터스텔라, 인셉션, 테넷 등 13개의 콘텐츠', updated: '00 시간 전 업데이트 됨', subscribers: '00 명이 구독중' },
-  { title: '시간을 다룬 영화', description: '인터스텔라, 인셉션, 테넷 등 13개의 콘텐츠', updated: '00 시간 전 업데이트 됨', subscribers: '00 명이 구독중' },
-];
 
 const PlayListPage: React.FC = () => {
   return (
@@ -27,8 +17,8 @@ const PlayListPage: React.FC = () => {
               throw new Error('Function not implemented.');
           } } />
       <CardGrid>
-        {dummyPlayLists.map((item, idx) => (
-          <PlayListCard key={idx} {...item} />
+        {samplePlaylistResponses.map((item, idx) => (
+          <PlayListCard key={idx} playlist={item} disableClick={false} />
         ))}
       </CardGrid>
     </div>

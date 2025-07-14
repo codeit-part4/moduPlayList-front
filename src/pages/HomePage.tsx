@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ContentSearchBar from '../components/ContentSearchBar.tsx';
 import ContentCard from '../components/ContentCard.tsx';
-import { dummyContents } from '../data/contents.ts';
+import { dummyContents } from '../type/contents.ts';
 
 const CardGridWrapper = styled.div`
     height: 70vh;

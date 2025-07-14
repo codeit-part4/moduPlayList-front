@@ -2,7 +2,7 @@ import React from 'react';
 import ContentSearchBar from '../components/ContentSearchBar.tsx';
 import ContentCard from '../components/ContentCard.tsx';
 import styled from 'styled-components';
-import { dummyContents } from '../data/contents.ts';
+import { dummyContents } from '../type/contents.ts';
 
 const CardGrid = styled.div`
   display: grid;
