@@ -23,6 +23,7 @@ const App: React.FC = () => {
         {/* 로그인 이후 공통 Layout 적용 */}
         <Route element={<MainLayout />}>
           <Route path="/home" element={<HomePage />} />
+          <Route path="/contents" element={<HomePage />} />
           <Route path="/contents/:contentId" element={<ContentPage />} />
           <Route path="/contents/:contentId/reviews" element={<ContentReviewsPage />} />
           <Route path="/playlists" element={<PlayListPage />} />
