@@ -9,8 +9,11 @@ import ContentReviewsPage from './pages/ContentReviewsPage';
 import PlayListPage from './pages/PlayListPage';
 import PlayListDetailPage from './pages/PlayListDetailPage';
 import ProfilePage from './pages/ProfilePage';
+import FollowingsPage from './pages/FollowingsPage';
+import FollowerPage from './pages/FollowerPage';
 import PlayListCreatePage from './pages/PlaylistCreatePage.tsx';
 import PlaylistEditPage from './pages/PlaylistEditPage.tsx';
+
 
 const App: React.FC = () => {
   return (
@@ -32,6 +35,9 @@ const App: React.FC = () => {
           <Route path="/playlists/:playListId/edit" element={<PlaylistEditPage />} />
           <Route path="/profiles" element={<ProfilePage />} />
           <Route path="/profiles/:userId" element={<ProfilePage />} />
+          <Route path=":userName/follower" element={<FollowerPage />} />
+          <Route path=":userName/followings" element={<FollowingsPage />} />
+          <Route path=":userName" element={<ProfilePage />} />
         </Route>
       </Routes>
     </Router>
