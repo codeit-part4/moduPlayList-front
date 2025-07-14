@@ -1,13 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
+import { Rating } from './common/Rating.tsx'
+import { useNavigate } from 'react-router-dom';
 
 interface ContentCardProps {
+  id: string;
   image?: string;
   category: string;
   title: string;
   description: string;
   rating: number;
   viewers: number;
+  disableClick?: boolean;
 }
 
 const Card = styled.div`
@@ -18,6 +22,13 @@ const Card = styled.div`
   overflow: hidden;
   margin-bottom: 24px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  cursor: pointer;
+  transition: all 0.2s ease;
+    
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 const ImageBox = styled.div`
@@ -43,18 +54,14 @@ const Title = styled.div`
   font-weight: bold;
   font-size: 16px;
   margin-bottom: 4px;
+    color: #333;
 `;
 
 const Description = styled.div`
   color: #888;
   font-size: 13px;
   margin-bottom: 8px;
-`;
-
-const Rating = styled.div`
-  font-size: 15px;
-  font-weight: bold;
-  margin-bottom: 4px;
+  height: 40px;
 `;
 
 const Viewers = styled.div`
@@ -62,19 +69,34 @@ const Viewers = styled.div`
   font-size: 12px;
 `;
 
-const ContentCard: React.FC<ContentCardProps> = ({ image, category, title, description, rating, viewers }) => (
-  <Card>
-    <ImageBox>
-      {image ? <img src={image} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span>🖼️</span>}
-    </ImageBox>
-    <CardBody>
-      <Category>{category}</Category>
-      <Title>{title}</Title>
-      <Description>{description}</Description>
-      <Rating>{rating} <span style={{ fontWeight: 'normal', fontSize: '13px' }}>(113)</span></Rating>
-      <Viewers>지금 {viewers}명이 보고 있어요.</Viewers>
-    </CardBody>
-  </Card>
-);
+const ContentCard: React.FC<ContentCardProps> = ({ id, image, category, title, description, rating, viewers, disableClick
+}) => {
+  const navigate = useNavigate();
 
-export default ContentCard; 
+  const handleClick = (e: React.MouseEvent) => {
+    if (disableClick) {
+      e.preventDefault();
+      return;
+    }
+    navigate(`/contents/${id}`);
+  };
+
+
+
+  return (
+    <Card onClick={handleClick}>
+      <ImageBox>
+        {image ? <img src={image} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span>🖼️</span>}
+      </ImageBox>
+      <CardBody>
+        <Category>{category}</Category>
+        <Title>{title}</Title>
+        <Description>{description}</Description>
+        <Rating score={rating}>{rating.toFixed(1)} <span style={{ fontWeight: 'normal', fontSize: '13px' }}>(113)</span></Rating>
+        <Viewers>지금 {viewers}명이 보고 있어요.</Viewers>
+      </CardBody>
+    </Card>
+  );
+}
+
+export default ContentCard;

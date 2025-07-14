@@ -18,4 +18,4 @@ const ContentReviewsPage: React.FC = () => {
   );
 };
 
-export default ContentReviewsPage; 
+export default ContentReviewsPage;

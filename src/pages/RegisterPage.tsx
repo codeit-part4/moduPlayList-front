@@ -1,5 +1,5 @@
 // src/pages/RegisterPage.tsx
-import RegisterForm from '../components/RegisterForm';
+import RegisterForm from '../components/auth/RegisterForm.tsx';
 
 const RegisterPage = () => {
   return <RegisterForm />;

@@ -4,7 +4,7 @@ export const TextLink = styled.div`
     text-align: center;
     margin-top: 10px;
     font-size: 12px;
-    color: #666;
+    color: var(--text-color-help);
 
     a {
     margin: 0 4px;
