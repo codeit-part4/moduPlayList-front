@@ -44,3 +44,23 @@ export const fetchPlaylistById = async (playlistId: string): Promise<PlaylistRes
     throw error;
   }
 };
+
+export const fetchPlaylistContents = async (playlistId: string) => {
+  try {
+    const response = await fetch(API_BASE_URL + `/api/playlists/${playlistId}/contents`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch playlist contents');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching playlist contents:', error);
+    throw error;
+  }
+};
+

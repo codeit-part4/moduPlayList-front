@@ -65,12 +65,12 @@ const Stats = styled.div`
   }
 `;
 
-const PublicBadge = styled.span<{ isPublic: boolean }>`
+const PublicBadge = styled.span<{ $isPublic: boolean }>`
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 12px;
-  background-color: ${props => props.isPublic ? '#e3f2fd' : '#f5f5f5'};
-  color: ${props => props.isPublic ? '#1976d2' : '#757575'};
+  background-color: ${props => props.$isPublic ? '#e3f2fd' : '#f5f5f5'};
+  color: ${props => props.$isPublic ? '#1976d2' : '#757575'};
 `;
 
 interface PlayListCardProps {
@@ -114,7 +114,7 @@ export const PlayListCard: React.FC<PlayListCardProps> = ({
         <UserName>{playlist.user.nickname}</UserName>
       </UserInfo>
       <Stats>
-        <PublicBadge isPublic={playlist.isPublic}>
+        <PublicBadge $isPublic={playlist.isPublic}>
           {playlist.isPublic ? '공개' : '비공개'}
         </PublicBadge>
         <span>구독자 {playlist.subscribeCount}명</span>

@@ -72,7 +72,7 @@ const ContentDetailInfo: React.FC<ContentDetailInfoProps> = ({ content }) => {
         <Title>{content.title}</Title>
         <Description>{content.description}</Description>
         <Stats>
-          <Rating score={content.rating}>{content.rating.toFixed(1)}</Rating>
+          <Rating $score={content.rating}>{content.rating.toFixed(1)}</Rating>
           <span>조회수 {content.viewers.toLocaleString()}회</span>
         </Stats>
       </InfoContainer>

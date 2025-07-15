@@ -2,15 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { Rating } from './common/Rating.tsx'
 import { useNavigate } from 'react-router-dom';
+import type { Content } from '../type/contents';
 
-interface ContentCardProps {
-  id: string;
-  image?: string;
-  category: string;
-  title: string;
-  description: string;
-  rating: number;
-  viewers: number;
+interface ContentCardProps extends Content {
   disableClick?: boolean;
 }
 
@@ -69,7 +63,15 @@ const Viewers = styled.div`
   font-size: 12px;
 `;
 
-const ContentCard: React.FC<ContentCardProps> = ({ id, image, category, title, description, rating, viewers, disableClick
+const ContentCard: React.FC<ContentCardProps> = ({
+  id,
+  image,
+  category,
+  title,
+  description,
+  rating,
+  viewers,
+  disableClick
 }) => {
   const navigate = useNavigate();
 
@@ -81,8 +83,6 @@ const ContentCard: React.FC<ContentCardProps> = ({ id, image, category, title, d
     navigate(`/contents/${id}`);
   };
 
-
-
   return (
     <Card onClick={handleClick}>
       <ImageBox>
@@ -92,7 +92,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ id, image, category, title, d
         <Category>{category}</Category>
         <Title>{title}</Title>
         <Description>{description}</Description>
-        <Rating score={rating}>{rating.toFixed(1)} <span style={{ fontWeight: 'normal', fontSize: '13px' }}>(113)</span></Rating>
+        <Rating $score={rating}>{rating.toFixed(1)} <span style={{ fontWeight: 'normal', fontSize: '13px' }}>(113)</span></Rating>
         <Viewers>지금 {viewers}명이 보고 있어요.</Viewers>
       </CardBody>
     </Card>
