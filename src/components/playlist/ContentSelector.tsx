@@ -165,6 +165,7 @@ export const ContentSelector: React.FC<ContentSelectorProps> = ({
                 title={content.title}
                 description={content.description}
                 rating={content.rating}
+                reviews={content.reviews}
                 viewers={content.viewers}
                 disableClick={true}
               />
