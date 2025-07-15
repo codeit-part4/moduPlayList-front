@@ -70,6 +70,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
   title,
   description,
   rating,
+  reviews,
   viewers,
   disableClick
 }) => {
@@ -92,7 +93,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
         <Category>{category}</Category>
         <Title>{title}</Title>
         <Description>{description}</Description>
-        <Rating $score={rating}>{rating.toFixed(1)} <span style={{ fontWeight: 'normal', fontSize: '13px' }}>(113)</span></Rating>
+        <Rating $score={rating}>{rating.toFixed(1)} <span style={{ fontWeight: 'normal', fontSize: '13px' }}>({reviews})</span></Rating>
         <Viewers>지금 {viewers}명이 보고 있어요.</Viewers>
       </CardBody>
     </Card>
