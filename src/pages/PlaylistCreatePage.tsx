@@ -6,6 +6,7 @@ import { PlaylistForm } from '../components/playlist/PlaylistFormProps.tsx';
 import { ContentSelector } from '../components/playlist/ContentSelector.tsx';
 import styled from 'styled-components';
 import { FormButton } from '../components/common/FormButton.tsx';
+import { BackButton } from '../components/common/BackButton.tsx';
 
 const Container = styled.div`
     width: 100%;
@@ -20,6 +21,10 @@ const PlaylistCreatePage: React.FC = () => {
   const [selectedContents, setSelectedContents] = useState<Array<{ id: string, title: string }>>([]);
   const [contents] = useState(dummyContents);
   const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,6 +50,9 @@ const PlaylistCreatePage: React.FC = () => {
 
   return (
     <Container>
+      <BackButton onClick={handleBack}>
+        목록으로 돌아가기
+      </BackButton>
       <h2>플레이리스트 추가하기</h2>
       <PlaylistForm
         title={title}

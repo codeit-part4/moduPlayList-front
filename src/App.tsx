@@ -30,9 +30,9 @@ const App: React.FC = () => {
           <Route path="/contents/:contentId" element={<ContentPage />} />
           <Route path="/contents/:contentId/reviews" element={<ContentReviewsPage />} />
           <Route path="/playlists" element={<PlayListPage />} />
-          <Route path="/playlists/:playListId" element={<PlayListDetailPage />} />
+          <Route path="/playlists/:playlistId" element={<PlayListDetailPage />} />
           <Route path="/playlists/new" element={<PlayListCreatePage />} />
-          <Route path="/playlists/:playListId/edit" element={<PlaylistEditPage />} />
+          <Route path="/playlists/:playlistId/edit" element={<PlaylistEditPage />} />
           <Route path="/profiles" element={<ProfilePage />} />
           <Route path="/profiles/:userId" element={<ProfilePage />} />
           <Route path=":userName/follower" element={<FollowerPage />} />
