@@ -73,6 +73,7 @@ const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name, followeeI
       .then(data => {
         setFollowerCount(data.followerCount);
         setFolloweeCount(data.followeeCount);
+        console.log(data.followeeCount);
       })
       .catch(() => {
         setFollowerCount(0);

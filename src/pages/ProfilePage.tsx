@@ -102,7 +102,14 @@ const ProfilePage: React.FC = () => {
   return (
     <div>
       <Section>
-        <UserProfileInfo isMe={isMe} name={name} followeeId={followeeId} isFollowing={isFollowing} setIsFollowing={setIsFollowing} userId={userId} />
+        <UserProfileInfo
+          isMe={isMe}
+          name={name}
+          followeeId={followeeId}
+          isFollowing={isFollowing}
+          setIsFollowing={setIsFollowing}
+          userId={userId}
+        />
       </Section>
       <Section>
         <div style={{fontWeight: 'bold', fontSize: '18px', marginBottom: '16px'}}>플레이리스트</div>
