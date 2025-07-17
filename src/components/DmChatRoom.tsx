@@ -94,7 +94,7 @@ interface Message {
   // revicedId는 전송에만 사용
 }
 
-const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, otherUserName, participantIds = [] }) => {
+const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, participantIds = [] }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [senderId, setSenderId] = useState('');
