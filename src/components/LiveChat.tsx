@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { InputBox } from './common/InputBox.tsx'
 import { Avatar } from './common/Avatar.tsx'
@@ -35,6 +35,30 @@ const MessageText = styled.div`
   font-size: 14px;
 `;
 
+const InputRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const SendButton = styled.button`
+  background: #6e56cf;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  transition: background 0.2s;
+  &:hover {
+    background: #866bff;
+  }
+`;
+
 const dummyMessages = [
   '건제가 좋아해요.',
   '건제가 응원해요.',
@@ -46,27 +70,49 @@ const dummyMessages = [
   '건제가 응원해요.',
 ];
 
-const LiveChat: React.FC = () => {
+interface LiveChatProps {
+  roomId?: string;
+}
+
+const LiveChat: React.FC<LiveChatProps> = ({ roomId }) => {
   const chatBoxRef = useRef<HTMLDivElement>(null);
+  const [input, setInput] = useState('');
+  const [messages, setMessages] = useState(dummyMessages);
 
   useEffect(() => {
     if (chatBoxRef.current) {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
     }
-  }, []);
+  }, [messages]);
+
+  const handleSend = () => {
+    if (!input.trim()) return;
+    setMessages([...messages, input]);
+    setInput('');
+  };
 
   return (
     <ChatContainer>
-      <ChatTitle>실시간 채팅</ChatTitle>
+      <ChatTitle>실시간 채팅 {roomId && <span style={{fontSize:'13px', color:'#888'}}>#{roomId}</span>}</ChatTitle>
       <ChatBox ref={chatBoxRef}>
-        {dummyMessages.map((msg, idx) => (
+        {messages.map((msg, idx) => (
           <ChatMessage key={idx}>
             <Avatar />
             <MessageText>{msg}</MessageText>
           </ChatMessage>
         ))}
       </ChatBox>
-      <InputBox placeholder="메시지를 입력해주세요." />
+      <InputRow>
+        <InputBox 
+          placeholder="메시지를 입력해주세요."
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => { if (e.key === 'Enter') handleSend(); }}
+        />
+        <SendButton onClick={handleSend} title="메시지 전송">
+          ↑
+        </SendButton>
+      </InputRow>
     </ChatContainer>
   );
 };

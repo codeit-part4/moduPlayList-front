@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import UserProfileInfo from '../components/UserProfileInfo';
+import PlayListCard from '../components/PlayListCard';
+import { useParams, useNavigate } from 'react-router-dom';
 import PlayListCard from '../components/playlist/PlayListCard.tsx';
 import { samplePlaylistResponses } from '../type/playlists.ts';
 import { useParams } from 'react-router-dom';
@@ -18,85 +20,187 @@ const CardGrid = styled.div`
 
 const ProfilePage: React.FC = () => {
   const { userName } = useParams();
+  const navigate = useNavigate();
+  
+  // 상태 관리
+  const [isLoading, setIsLoading] = useState(true);
   const [isMe, setIsMe] = useState(false);
-  const [name, setName] = useState(userName || '');
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [notFound, setNotFound] = useState(false);
-  const [followeeId, setFolloweeId] = useState<string | undefined>(undefined);
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
-  const [userId, setUserId] = useState<string | undefined>(undefined);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  // DM방 생성 및 이동
+  const handleOpenMessage = async () => {
+    if (!userData?.userid) return;
+    
     const token = localStorage.getItem('accessToken');
-    if (token) {
-      fetch(`${API_BASE_URL}/api/auth/me`, {
+    if (!token) {
+      alert('로그인이 필요합니다');
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/dm/${userData.userid}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        const roomId = data.roomId || data.id;
+        if (roomId) {
+          navigate(`/dm/${roomId}`);
+        } else {
+          alert('DM방 생성에 실패했습니다');
+        }
+      } else {
+        alert('DM방 생성에 실패했습니다');
+      }
+    } catch (e) {
+      alert('서버와 연결할 수 없습니다');
+    }
+  };
+
+  // 현재 로그인한 사용자 정보 가져오기
+  const fetchCurrentUser = async (): Promise<UserData | null> => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) return null;
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-        .then(res => res.ok ? res.json() : Promise.reject())
-        .then(data => {
-          setIsMe(data.name === userName);
-          if (data.name === userName) {
-            setName(data.name);
-            setUserId(data.userid);
-          }
-        })
-        .catch(() => setIsMe(false));
+      });
+      
+      if (res.ok) {
+        return await res.json();
+      }
+      return null;
+    } catch (e) {
+      return null;
     }
+  };
+
+  // 특정 사용자 정보 가져오기
+  const fetchUserByUsername = async (username: string): Promise<UserData | null> => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/users/username/${username}`);
+      
+      if (res.status === 404) {
+        return null;
+      }
+      
+      if (res.ok) {
+        return await res.json();
+      }
+      
+      return null;
+    } catch (e) {
+      return null;
+    }
+  };
+
+  // 팔로우 상태 확인
+  const checkFollowStatus = async (followeeId: string) => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) return;
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/follows/${followeeId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      setIsFollowing(res.ok);
+    } catch (e) {
+      setIsFollowing(false);
+    }
+  };
+
+  // 메인 데이터 로딩 로직
+  useEffect(() => {
+    const loadUserData = async () => {
+      if (!userName) {
+        setError('사용자명이 필요합니다');
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(true);
+      setError(null);
+      setNotFound(false);
+
+      try {
+        // 현재 로그인한 사용자 정보 가져오기
+        const currentUser = await fetchCurrentUser();
+        
+        if (currentUser && currentUser.name === userName) {
+          // 내 프로필인 경우
+          setIsMe(true);
+          setUserData(currentUser);
+          setNotFound(false);
+        } else {
+          // 다른 사용자의 프로필인 경우
+          setIsMe(false);
+          const targetUser = await fetchUserByUsername(userName);
+          
+          if (targetUser) {
+            setUserData(targetUser);
+            setNotFound(false);
+            // 팔로우 상태 확인
+            await checkFollowStatus(targetUser.userid);
+          } else {
+            setNotFound(true);
+            setUserData(null);
+          }
+        }
+      } catch (e) {
+        setError('사용자 정보를 불러오는데 실패했습니다');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadUserData();
   }, [userName]);
 
-  useEffect(() => {
-    if (!isMe && userName) {
-      fetch(`${API_BASE_URL}/api/users/username/${userName}`)
-        .then(res => {
-          if (res.status === 404) {
-            setNotFound(true);
-            setName(userName);
-            setFolloweeId(undefined);
-            setUserId(undefined);
-            return null;
-          }
-          return res.json();
-        })
-        .then(data => {
-          if (data && data.name) setName(data.name);
-          if (data && data.userid) {
-            setFolloweeId(data.userid);
-            setUserId(data.userid);
-          }
-        })
-        .catch(() => setNotFound(true));
-    } else {
-      setNotFound(false);
-      setFolloweeId(undefined);
-      // 내 프로필이면 userId는 위에서 이미 세팅됨
-    }
-  }, [isMe, userName]);
+  // 로딩 중
+  if (isLoading) {
+    return <LoadingContainer>사용자 정보를 불러오는 중...</LoadingContainer>;
+  }
 
-  useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (followeeId && token) {
-      fetch(`${API_BASE_URL}/api/follows/${followeeId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then(res => res.ok ? res.json() : false)
-        .then(data => {
-          setIsFollowing(!!data);
-        })
-        .catch(() => setIsFollowing(false));
-    }
-  }, [followeeId]);
+  // 에러 발생
+  if (error) {
+    return <ErrorContainer>{error}</ErrorContainer>;
+  }
 
+  // 사용자를 찾을 수 없음
   if (notFound) {
-    return <div style={{ padding: '48px', textAlign: 'center', fontSize: '22px', color: '#d00' }}>존재하지 않는 사용자입니다.</div>;
+    return <ErrorContainer>존재하지 않는 사용자입니다.</ErrorContainer>;
+  }
+
+  // 사용자 데이터가 없는 경우
+  if (!userData) {
+    return <ErrorContainer>사용자 정보를 불러올 수 없습니다.</ErrorContainer>;
   }
 
   return (
     <div>
       <Section>
-        <UserProfileInfo isMe={isMe} name={name} followeeId={followeeId} isFollowing={isFollowing} setIsFollowing={setIsFollowing} userId={userId} />
+        <UserProfileInfo
+          isMe={isMe}
+          name={userData.name}
+          followeeId={userData.userid}
+          isFollowing={isFollowing}
+          setIsFollowing={setIsFollowing}
+          userId={userData.userid}
+        />
       </Section>
       <Section>
         <div style={{fontWeight: 'bold', fontSize: '18px', marginBottom: '16px'}}>플레이리스트</div>

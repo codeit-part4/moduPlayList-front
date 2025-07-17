@@ -12,6 +12,8 @@ import ProfilePage from './pages/ProfilePage';
 import FollowingsPage from './pages/FollowingsPage';
 import FollowerPage from './pages/FollowerPage';
 import PlayListCreatePage from './pages/PlaylistCreatePage.tsx';
+import DmListPage from './pages/DmListPage';
+import DmDetailPage from './pages/DmDetailPage';
 import PlaylistEditPage from './pages/PlaylistEditPage.tsx';
 
 
@@ -32,6 +34,8 @@ const App: React.FC = () => {
           <Route path="/playlists" element={<PlayListPage />} />
           <Route path="/playlists/:playListId" element={<PlayListDetailPage />} />
           <Route path="/playlists/new" element={<PlayListCreatePage />} />
+          <Route path="/dm" element={<DmListPage />} />
+          <Route path="/dm/:roomId" element={<DmDetailPage />} />
           <Route path="/playlists/:playListId/edit" element={<PlaylistEditPage />} />
           <Route path="/profiles" element={<ProfilePage />} />
           <Route path="/profiles/:userId" element={<ProfilePage />} />

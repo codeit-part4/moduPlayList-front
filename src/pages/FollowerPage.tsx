@@ -110,13 +110,9 @@ const FollowerPage: React.FC = () => {
   }, [isMe, userName]);
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (followeeId && token) {
-      fetch(`${API_BASE_URL}/api/follows/${followeeId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    if (followeeId) {
+      fetch(`${API_BASE_URL}/api/follows/follwers/${followeeId}`
+        )
         .then(res => res.ok ? res.json() : false)
         .then(data => {
           setIsFollowing(!!data);
