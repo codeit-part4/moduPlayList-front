@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import UserProfileInfo from '../components/UserProfileInfo';
 import PlayListCard from '../components/PlayListCard';
 import { useParams, useNavigate } from 'react-router-dom';
+import PlayListCard from '../components/playlist/PlayListCard.tsx';
+import { samplePlaylistResponses } from '../type/playlists.ts';
+import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../api';
 
 const Section = styled.div`
@@ -11,37 +14,9 @@ const Section = styled.div`
 
 const CardGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
 `;
-
-const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  font-size: 18px;
-  color: #666;
-`;
-
-const ErrorContainer = styled.div`
-  padding: 48px;
-  text-align: center;
-  font-size: 22px;
-  color: #d00;
-`;
-
-const dummyPlayLists = [
-  { title: '시간을 다룬 영화', description: '인터스텔라, 인셉션, 테넷 등 13개의 콘텐츠', updated: '00 시간 전 업데이트 됨', subscribers: '00 명이 구독중' },
-  { title: '시간을 다룬 영화', description: '인터스텔라, 인셉션, 테넷 등 13개의 콘텐츠', updated: '00 시간 전 업데이트 됨', subscribers: '00 명이 구독중' },
-  { title: '시간을 다룬 영화', description: '인터스텔라, 인셉션, 테넷 등 13개의 콘텐츠', updated: '00 시간 전 업데이트 됨', subscribers: '00 명이 구독중' },
-  { title: '시간을 다룬 영화', description: '인터스텔라, 인셉션, 테넷 등 13개의 콘텐츠', updated: '00 시간 전 업데이트 됨', subscribers: '00 명이 구독중' },
-];
-
-interface UserData {
-  name: string;
-  userid: string;
-}
 
 const ProfilePage: React.FC = () => {
   const { userName } = useParams();
@@ -230,16 +205,16 @@ const ProfilePage: React.FC = () => {
       <Section>
         <div style={{fontWeight: 'bold', fontSize: '18px', marginBottom: '16px'}}>플레이리스트</div>
         <CardGrid>
-          {dummyPlayLists.map((item, idx) => (
-            <PlayListCard key={idx} {...item} />
+          {samplePlaylistResponses.map((item, idx) => (
+            <PlayListCard key={idx} playlist={item} />
           ))}
         </CardGrid>
       </Section>
       <Section>
         <div style={{fontWeight: 'bold', fontSize: '18px', marginBottom: '16px'}}>구독 중인 플레이리스트</div>
         <CardGrid>
-          {dummyPlayLists.map((item, idx) => (
-            <PlayListCard key={idx} {...item} />
+          {samplePlaylistResponses.map((item, idx) => (
+            <PlayListCard key={idx} playlist={item} />
           ))}
         </CardGrid>
       </Section>
