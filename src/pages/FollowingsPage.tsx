@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { API_BASE_URL } from '../api';
+import { useParams } from 'react-router-dom';
+import UserProfileInfo from '../components/UserProfileInfo';
 
 const Container = styled.div`
   max-width: 900px;
@@ -53,36 +55,95 @@ const UserEmail = styled.div`
 `;
 
 interface FollowingUser {
-  userid: string;
-  name: string;
+  userName: string;
   email: string;
 }
 
 const FollowingsPage: React.FC = () => {
+  const { userName } = useParams();
   const [users, setUsers] = useState<FollowingUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  // 추가: 프로필 정보 상태
+  const [isMe, setIsMe] = useState(false);
+  const [name, setName] = useState(userName || '');
+  const [followeeId, setFolloweeId] = useState<string | undefined>(undefined);
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string | undefined>(undefined);
+
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
-    fetch(`${API_BASE_URL}/api/follows/followings`, {
-      headers: {
-        Authorization: token ? `Bearer ${token}` : '',
-      },
-    })
+    if (token) {
+      fetch(`${API_BASE_URL}/api/auth/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then(res => res.ok ? res.json() : Promise.reject())
+        .then(data => {
+          setIsMe(data.name === userName);
+          if (data.name === userName) {
+            setName(data.name);
+            setUserId(data.userid);
+          }
+        })
+        .catch(() => setIsMe(false));
+    }
+  }, [userName]);
+
+  useEffect(() => {
+    if (!isMe && userName) {
+      fetch(`${API_BASE_URL}/api/users/username/${userName}`)
+        .then(res => res.ok ? res.json() : Promise.reject())
+        .then(data => {
+          if (data && data.name) setName(data.name);
+          if (data && data.userid) {
+            setFolloweeId(data.userid);
+            setUserId(data.userid);
+          }
+        })
+        .catch(() => {});
+    } else {
+      setFolloweeId(undefined);
+    }
+  }, [isMe, userName]);
+
+  useEffect(() => {
+    if (followeeId) {
+      fetch(`${API_BASE_URL}/api/follows/followings/${followeeId}`)
+        .then(res => res.ok ? res.json() : false)
+        .then(data => {
+          setIsFollowing(!!data);
+        })
+        .catch(() => setIsFollowing(false));
+    }
+  }, [followeeId]);
+
+  useEffect(() => {
+    if (!userName) return;
+    // 1. userId 조회
+    fetch(`${API_BASE_URL}/api/users/username/${userName}`)
       .then(res => res.ok ? res.json() : Promise.reject())
       .then(data => {
-        setUsers(data);
+        if (!data.userid) throw new Error('userId 없음');
+        // 2. userId로 팔로잉 목록 조회
+        return fetch(`${API_BASE_URL}/api/follows/followings/${data.userid}`);
+      })
+      .then(res => res.ok ? res.json() : Promise.reject())
+      .then(data => {
+        setUsers(data.content || []);
         setLoading(false);
       })
       .catch(() => {
         setError('팔로잉 목록을 불러올 수 없습니다');
         setLoading(false);
       });
-  }, []);
+  }, [userName]);
 
   return (
     <Container>
+      <UserProfileInfo isMe={isMe} name={name} followeeId={followeeId} isFollowing={isFollowing} setIsFollowing={setIsFollowing} userId={userId} />
       <Title>팔로잉</Title>
       {loading ? (
         <div>로딩 중...</div>
@@ -90,11 +151,11 @@ const FollowingsPage: React.FC = () => {
         <div style={{ color: '#d00' }}>{error}</div>
       ) : (
         <List>
-          {users.map(user => (
-            <FollowingUserCard key={user.userid}>
+          {users.map((user, idx) => (
+            <FollowingUserCard key={user.userName + user.email + idx}>
               <Avatar />
               <UserInfo>
-                <UserName>{user.name}</UserName>
+                <UserName>{user.userName}</UserName>
                 <UserEmail>{user.email}</UserEmail>
               </UserInfo>
             </FollowingUserCard>
