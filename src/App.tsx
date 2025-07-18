@@ -37,7 +37,6 @@ const App: React.FC = () => {
           <Route path="/dm" element={<DmListPage />} />
           <Route path="/dm/:roomId" element={<DmDetailPage />} />
           <Route path="/playlists/:playListId/edit" element={<PlaylistEditPage />} />
-          <Route path="/profiles" element={<ProfilePage />} />
           <Route path="/profiles/:userId" element={<ProfilePage />} />
           <Route path=":userName/follower" element={<FollowerPage />} />
           <Route path=":userName/followings" element={<FollowingsPage />} />
