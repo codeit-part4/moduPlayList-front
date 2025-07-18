@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import DmChatRoom from '../components/DmChatRoom';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { API_BASE_URL } from '../api';
 
 
 const Wrapper = styled.div`
@@ -35,10 +36,30 @@ const BackArrow = styled.button`
 const DmDetailPage: React.FC = () => {
   const navigate = useNavigate();
   const { roomId } = useParams();
-  // 실제로는 상대 닉네임을 roomId로부터 fetch해야 하지만, 예시로 woody 고정
-  const otherUserName = "woody";
   const location = useLocation();
-  const participantIds = location.state?.participantIds || [];
+  const otherUserId = location.state?.otherUserId;
+  const [otherUserName, setOtherUserName] = useState<string>('로딩 중...');
+
+  // 상대방 정보 가져오기
+  useEffect(() => {
+    if (!otherUserId) return;
+    
+    const fetchOtherUserInfo = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/users/${otherUserId}`);
+        if (res.ok) {
+          const userData = await res.json();
+          setOtherUserName(userData.nickname || userData.name || otherUserId);
+        } else {
+          setOtherUserName('알 수 없음');
+        }
+      } catch (e) {
+        setOtherUserName('알 수 없음');
+      }
+    };
+
+    fetchOtherUserInfo();
+  }, [otherUserId]);
 
   return (
     <Wrapper>
@@ -46,7 +67,7 @@ const DmDetailPage: React.FC = () => {
         <BackArrow onClick={() => navigate(-1)} title="뒤로가기">←</BackArrow>
         {otherUserName}
       </Header>
-      <DmChatRoom roomId={roomId} otherUserName={otherUserName} participantIds={participantIds}/>
+      <DmChatRoom roomId={roomId} otherUserName={otherUserName} otherUserId={otherUserId} />
     </Wrapper>
   );
 };

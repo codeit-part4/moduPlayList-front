@@ -129,6 +129,31 @@ const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name, followeeI
     }
   };
 
+  const handleSendMessage = async () => {
+    if (!userId) return;
+    const token = localStorage.getItem('accessToken');
+    
+    try {
+      // DM 방 생성 또는 기존 방 찾기
+      const res = await fetch(`${API_BASE_URL}/api/dm/${userId}`, {
+        method: 'POST',
+        headers: {
+          Authorization: token ? `Bearer ${token}` : '',
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (res.ok) {
+        navigate('/dm');
+      } else {
+        const errorData = await res.json();
+        alert(errorData.message || 'DM 방 생성에 실패했습니다');
+      }
+    } catch (e) {
+      alert('서버와 연결할 수 없습니다');
+    }
+  };
+
   return (
     <ProfileBox>
       <Avatar />
@@ -151,7 +176,12 @@ const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name, followeeI
             >
               {isFollowing ? '팔로잉' : '팔로우'}
             </Btn>
-            <Btn style={{ background: '#e5e7eb', color: '#222' }}>메시지 보내기</Btn>
+            <Btn 
+              style={{ background: '#e5e7eb', color: '#222' }}
+              onClick={handleSendMessage}
+            >
+              메시지 보내기
+            </Btn>
           </BtnGroup>
         )}
         <Status>지금 <b>인셉션</b>을 보고 있습니다.</Status>

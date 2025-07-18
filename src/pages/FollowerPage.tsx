@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { API_BASE_URL } from '../api';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import UserProfileInfo from '../components/UserProfileInfo';
 
 const Container = styled.div`
@@ -71,6 +71,8 @@ const FollowerPage: React.FC = () => {
   const [followeeId, setFolloweeId] = useState<string | undefined>(undefined);
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [userId, setUserId] = useState<string | undefined>(undefined);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -153,7 +155,11 @@ const FollowerPage: React.FC = () => {
       ) : (
         <List>
           {users.map((user, idx) => (
-            <FollowerUserCard key={user.userName + user.email + idx}>
+            <FollowerUserCard
+              key={user.userName + user.email + idx}
+              onClick={() => navigate(`/${user.userName}`)}
+              style={{ cursor: 'pointer' }}
+            >
               <Avatar />
               <UserInfo>
                 <UserName>{user.userName}</UserName>
