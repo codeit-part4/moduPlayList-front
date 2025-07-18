@@ -82,7 +82,7 @@ const SendButton = styled.button`
 interface DmChatRoomProps {
   roomId?: string;
   otherUserName: string;
-  participantIds?: string[];
+  otherUserId?: string;
 }
 
 interface Message {
@@ -94,11 +94,11 @@ interface Message {
   // revicedId는 전송에만 사용
 }
 
-const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, participantIds = [] }) => {
+const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, otherUserId }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [senderId, setSenderId] = useState('');
-  const [revicedId, setRevicedId] = useState('');
+  const [receiverId, setReceiverId] = useState('');
   const chatRef = useRef<HTMLDivElement>(null);
   const stompClientRef = useRef<Client | null>(null);
 
@@ -112,32 +112,34 @@ const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, participantIds = [] }) 
       .then(res => res.ok ? res.json() : Promise.reject())
       .then(data => {
         setSenderId(data.userid);
-        // participantIds에서 내 userId가 아닌 값을 revicedId로
-        const otherId = participantIds.find(id => id !== data.userid);
-        if (otherId) setRevicedId(otherId);
+        // otherUserId를 receiverId로 설정
+        if (otherUserId) setReceiverId(otherUserId);
       })
       .catch(() => {});
-  }, [participantIds]);
+  }, [otherUserId]);
 
   // 메시지 히스토리 불러오기
   useEffect(() => {
-    if (!revicedId) return;
+    if (!receiverId || !roomId) return;
     const token = localStorage.getItem('accessToken');
-    fetch(`${API_BASE_URL}/api/dm/${revicedId}`, {
+    fetch(`${API_BASE_URL}/api/dm/${receiverId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.ok ? res.json() : Promise.reject())
       .then(data => {
+        // data.content 또는 data가 배열인지 확인
         if (Array.isArray(data.content)) {
           setMessages(data.content);
+        } else if (Array.isArray(data)) {
+          setMessages(data);
         }
       })
       .catch(() => {});
-  }, [revicedId]);
+  }, [receiverId, roomId]);
 
   // STOMP WebSocket 연결 및 구독
   useEffect(() => {
-    if (!roomId || !senderId || !revicedId) return;
+    if (!roomId || !senderId || !receiverId) return;
     const token = localStorage.getItem('accessToken');
     const socket = new SockJS('http://localhost:8080/ws');
     const client = new Client({
@@ -146,8 +148,8 @@ const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, participantIds = [] }) 
       debug: (str) => console.log(str),
       onConnect: () => {
         client.subscribe(`/sub/dm/${roomId}`, (message) => {
+          console.log('서버에서 온 메시지:', message.body);
           const msgObj = JSON.parse(message.body);
-          // 서버에서 오는 구조에 맞게 파싱
           setMessages(prev => [...prev, msgObj]);
         });
       },
@@ -155,12 +157,12 @@ const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, participantIds = [] }) 
     client.activate();
     stompClientRef.current = client;
     return () => { client.deactivate(); };
-  }, [roomId, senderId, revicedId]);
+  }, [roomId, senderId, receiverId]);
 
   // 메시지 전송
   const handleSend = useCallback(() => {
-    console.log('send', { input, roomId, senderId, revicedId });
-    if (!input.trim() || !roomId || !senderId || !revicedId) return;
+    console.log('send', { input, roomId, senderId, receiverId });
+    if (!input.trim() || !roomId || !senderId || !receiverId) return;
     if (stompClientRef.current) {
       console.log('connected?', stompClientRef.current.connected);
     }
@@ -171,12 +173,12 @@ const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, participantIds = [] }) 
           roomId,
           content: input,
           senderId,
-          revicedId,
+          receiverId,
         }),
       });
       setInput('');
     }
-  }, [input, roomId, senderId, revicedId]);
+  }, [input, roomId, senderId, receiverId]);
 
   useEffect(() => {
     if (chatRef.current) {
