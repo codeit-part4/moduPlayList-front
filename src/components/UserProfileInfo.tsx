@@ -144,8 +144,6 @@ const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name, followeeI
       });
 
       if (res.ok) {
-        const data = await res.json();
-        // DMListPage로 이동
         navigate('/dm');
       } else {
         const errorData = await res.json();

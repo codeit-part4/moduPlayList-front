@@ -49,11 +49,6 @@ const UserId = styled.div`
   font-size: 17px;
 `;
 
-interface DmRoom {
-  id: string;
-  participantIds: string[];
-}
-
 const DmListPage: React.FC = () => {
   const [rooms, setRooms] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
