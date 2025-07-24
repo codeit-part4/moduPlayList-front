@@ -99,13 +99,13 @@ const PlayListPage: React.FC = () => {
             } } />
         <button
           style={{
-            marginLeft: 8,
+            marginLeft: 80,
             background: '#3b82f6',
             color: 'white',
             border: 'none',
             borderRadius: 4,
-            width: 60,
-            height: 36,
+            width: 150,
+            height: 40,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -116,7 +116,7 @@ const PlayListPage: React.FC = () => {
           title="플레이리스트 추가"
           onClick={() => setShowModal(true)}
         >
-          추가
+          플리추가
         </button>
       </div>
       {showModal && (

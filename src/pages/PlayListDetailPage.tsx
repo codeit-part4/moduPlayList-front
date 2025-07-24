@@ -5,7 +5,6 @@ import ContentCard from '../components/ContentCard';
 import { dummyContents } from '../type/contents.ts';
 import { BackButton } from '../components/common/BackButton.tsx';
 import { useNavigate, useParams } from 'react-router-dom';
-import { samplePlaylistResponses } from '../type/playlists.ts';
 import { useEffect, useState } from 'react';
 import { API_BASE_URL } from '../api';
 
