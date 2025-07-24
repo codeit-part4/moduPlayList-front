@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import type { PlaylistResponse } from '../../type/playlists';
 
 const InfoContainer = styled.div`
   display: flex;
@@ -53,18 +54,28 @@ const Description = styled.div`
   margin-left: 16px;
 `;
 
-const PlayListInfo: React.FC = () => (
-  <InfoContainer>
-    <Title>{'{플레이리스트 제목}'}</Title>
-    <CuratorBox>
-      <Avatar />
-      <CuratorName>woody</CuratorName>
-    </CuratorBox>
-    <Subscriber>구독자: 00명</Subscriber>
-    <SubscribeBtn>구독하기</SubscribeBtn>
-    <DescTitle>설명</DescTitle>
-    <Description>{'(플레이리스트 설명)'}</Description>
-  </InfoContainer>
-);
+interface PlayListInfoProps {
+  playlist?: PlaylistResponse;
+}
+
+const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
+  if (!playlist) {
+    return <InfoContainer>플레이리스트 정보를 찾을 수 없습니다.</InfoContainer>;
+  }
+
+  return (
+    <InfoContainer>
+      <Title>{playlist.title}</Title>
+      <CuratorBox>
+        <Avatar />
+        <CuratorName>{playlist.user.nickname}</CuratorName>
+      </CuratorBox>
+      <Subscriber>구독자: {playlist.subscribeCount}명</Subscriber>
+      <SubscribeBtn>구독하기</SubscribeBtn>
+      <DescTitle>설명</DescTitle>
+      <Description>{playlist.description}</Description>
+    </InfoContainer>
+  );
+};
 
 export default PlayListInfo; 
