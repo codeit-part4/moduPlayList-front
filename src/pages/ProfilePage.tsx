@@ -136,7 +136,7 @@ const ProfilePage: React.FC = () => {
         <UserProfileInfo isMe={isMe} name={name} followeeId={followeeId} isFollowing={isFollowing} setIsFollowing={setIsFollowing} userId={userId} />
       </Section>
       <Section>
-        <div style={{fontWeight: 'bold', fontSize: '18px', marginBottom: '16px'}}>플레이리스트</div>
+        <div style={{fontWeight: 'bold', fontSize: '18px', marginBottom: '16px'}}>내 플레이리스트</div>
         <CardGrid>
           {samplePlaylistResponses.map((item, idx) => (
             <PlayListCard key={idx} playlist={item} />

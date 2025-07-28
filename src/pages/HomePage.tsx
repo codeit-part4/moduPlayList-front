@@ -29,8 +29,8 @@ const HomePage: React.FC = () => {
       }} />
       <CardGridWrapper>
         <CardGrid>
-          {dummyContents.map((item) => (
-            <ContentCard {...item} disableClick={false} />
+          {dummyContents.map((item: any, idx: number) => (
+            <ContentCard {...item} key={item.id || idx} disableClick={false} />
           ))}
         </CardGrid>
       </CardGridWrapper>
