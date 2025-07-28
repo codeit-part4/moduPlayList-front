@@ -31,8 +31,43 @@ const CuratorName = styled.span`
   font-size: 16px;
 `;
 
+const StatsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 15px;
+`;
+
 const Subscriber = styled.div`
   font-size: 15px;
+`;
+
+const LikeCount = styled.div`
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+const LikeButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.1s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 `;
 
 const SubscribeBtn = styled.button`
@@ -63,6 +98,118 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [loadingSub, setLoadingSub] = useState(true);
   const [subscribeCount, setSubscribeCount] = useState(playlist?.subscribeCount ?? 0);
+  const [likeCount, setLikeCount] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
+  const [loadingLike, setLoadingLike] = useState(false);
+
+  // 좋아요 수 가져오기
+  const fetchLikeCount = async (id: string) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/playlists/${id}/likes`);
+      if (res.ok) {
+        const count = await res.json();
+        setLikeCount(count);
+      }
+    } catch (error) {
+      console.error('좋아요 수를 가져오는데 실패했습니다:', error);
+    }
+  };
+
+  // 내 좋아요 상태 확인
+  const checkMyLikeStatus = async (id: string) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      setIsLiked(false);
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/playlists/${id}/likes/me`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setIsLiked(data);
+      } else {
+        setIsLiked(false);
+      }
+    } catch (error) {
+      console.error('좋아요 상태 확인에 실패했습니다:', error);
+      setIsLiked(false);
+    }
+  };
+
+  // 좋아요 추가
+  const addLike = async (id: string) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
+    setLoadingLike(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/playlists/${id}/likes`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (res.ok) {
+        setIsLiked(true);
+        setLikeCount(prev => prev + 1);
+      } else {
+        alert('좋아요 추가에 실패했습니다.');
+      }
+    } catch (error) {
+      alert('서버와 연결할 수 없습니다.');
+    } finally {
+      setLoadingLike(false);
+    }
+  };
+
+  // 좋아요 취소
+  const removeLike = async (id: string) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
+    setLoadingLike(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/playlists/${id}/likes`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      });
+      if (res.ok) {
+        setIsLiked(false);
+        setLikeCount(prev => Math.max(0, prev - 1));
+      } else {
+        alert('좋아요 취소에 실패했습니다.');
+      }
+    } catch (error) {
+      alert('서버와 연결할 수 없습니다.');
+    } finally {
+      setLoadingLike(false);
+    }
+  };
+
+  // 좋아요 토글
+  const handleLikeToggle = async () => {
+    if (!playlist?.id || loadingLike) return;
+    
+    if (isLiked) {
+      await removeLike(playlist.id);
+    } else {
+      await addLike(playlist.id);
+    }
+  };
 
   // 구독자 수 최신화 함수
   const fetchSubscribeCount = async (id: string) => {
@@ -77,6 +224,10 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
 
   useEffect(() => {
     setSubscribeCount(playlist?.subscribeCount ?? 0);
+    if (playlist?.id) {
+      fetchLikeCount(playlist.id);
+      checkMyLikeStatus(playlist.id);
+    }
   }, [playlist]);
 
   useEffect(() => {
@@ -147,7 +298,18 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
         <Avatar />
         <CuratorName>{playlist.user.nickname}</CuratorName>
       </CuratorBox>
-      <Subscriber>구독자: {subscribeCount}명</Subscriber>
+      <StatsContainer>
+        <Subscriber>구독자: {subscribeCount}명</Subscriber>
+        <LikeCount>
+          <LikeButton 
+            onClick={handleLikeToggle} 
+            disabled={loadingLike}
+            style={{ color: isLiked ? '#ff4757' : '#666' }}
+          >
+            👍 {likeCount}명
+          </LikeButton>
+        </LikeCount>
+      </StatsContainer>
       {loadingSub ? (
         <SubscribeBtn disabled>로딩중...</SubscribeBtn>
       ) : isSubscribed ? (
