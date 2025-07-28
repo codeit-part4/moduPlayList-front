@@ -10,7 +10,7 @@ export interface Content {
 
 export const dummyContents = [
   {
-    id: '1',
+    id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1',
     title: 'React 기초 마스터하기',
     description: '리액트의 핵심 개념과 실전 활용법을 배워보세요',
     category: '프로그래밍',
@@ -19,7 +19,7 @@ export const dummyContents = [
     image: 'https://picsum.photos/seed/react/200/300'
   },
   {
-    id: '2',
+    id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa2',
     title: 'UX/UI 디자인 원칙',
     description: '사용자 중심의 인터페이스 디자인 가이드',
     category: '디자인',
@@ -28,7 +28,7 @@ export const dummyContents = [
     image: 'https://picsum.photos/seed/design/200/300'
   },
   {
-    id: '3',
+    id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa3',
     title: '디지털 마케팅 전략',
     description: '효과적인 온라인 마케팅 전략 수립하기',
     category: '마케팅',
@@ -37,7 +37,7 @@ export const dummyContents = [
     image: 'https://picsum.photos/seed/marketing/200/300'
   },
   {
-    id: '4',
+    id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa4',
     title: 'TypeScript 실전 프로젝트',
     description: '타입스크립트로 안전한 코드 작성하기',
     category: '프로그래밍',
@@ -46,7 +46,7 @@ export const dummyContents = [
     image: 'https://picsum.photos/seed/typescript/200/300'
   },
   {
-    id: '5',
+    id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa5',
     title: '모션 그래픽 기초',
     description: 'After Effects를 활용한 모션 디자인',
     category: '디자인',
@@ -55,7 +55,7 @@ export const dummyContents = [
     image: 'https://picsum.photos/seed/motion/200/300'
   },
   {
-    id: '6',
+    id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa6',
     title: '데이터 분석 입문',
     description: 'Python을 활용한 데이터 분석 기초',
     category: '데이터',
