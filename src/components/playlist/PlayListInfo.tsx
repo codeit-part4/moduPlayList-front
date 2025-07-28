@@ -102,6 +102,21 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [loadingLike, setLoadingLike] = useState(false);
 
+  // 공통 함수들
+  const getAccessToken = () => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      alert('로그인이 필요합니다.');
+      return null;
+    }
+    return token;
+  };
+
+  const handleApiError = (error: any, message: string) => {
+    console.error(message, error);
+    alert('서버와 연결할 수 없습니다.');
+  };
+
   // 좋아요 수 가져오기
   const fetchLikeCount = async (id: string) => {
     try {
@@ -117,7 +132,7 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
 
   // 내 좋아요 상태 확인
   const checkMyLikeStatus = async (id: string) => {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessToken();
     if (!accessToken) {
       setIsLiked(false);
       return;
@@ -143,11 +158,8 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
 
   // 좋아요 추가
   const addLike = async (id: string) => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
-      alert('로그인이 필요합니다.');
-      return;
-    }
+    const accessToken = getAccessToken();
+    if (!accessToken) return;
 
     setLoadingLike(true);
     try {
@@ -165,7 +177,7 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
         alert('좋아요 추가에 실패했습니다.');
       }
     } catch (error) {
-      alert('서버와 연결할 수 없습니다.');
+      handleApiError(error, '좋아요 추가에 실패했습니다.');
     } finally {
       setLoadingLike(false);
     }
@@ -173,11 +185,8 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
 
   // 좋아요 취소
   const removeLike = async (id: string) => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
-      alert('로그인이 필요합니다.');
-      return;
-    }
+    const accessToken = getAccessToken();
+    if (!accessToken) return;
 
     setLoadingLike(true);
     try {
@@ -194,7 +203,7 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
         alert('좋아요 취소에 실패했습니다.');
       }
     } catch (error) {
-      alert('서버와 연결할 수 없습니다.');
+      handleApiError(error, '좋아요 취소에 실패했습니다.');
     } finally {
       setLoadingLike(false);
     }
@@ -219,7 +228,9 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
         const data = await res.json();
         setSubscribeCount(data.count ?? 0);
       }
-    } catch {}
+    } catch (error) {
+      console.error('구독자 수를 가져오는데 실패했습니다:', error);
+    }
   };
 
   useEffect(() => {
@@ -233,7 +244,7 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
   useEffect(() => {
     const checkSubscribe = async () => {
       if (!playlist) return;
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = getAccessToken();
       if (!accessToken) {
         setIsSubscribed(false);
         setLoadingSub(false);
@@ -251,7 +262,8 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
         } else {
           setIsSubscribed(false);
         }
-      } catch {
+      } catch (error) {
+        console.error('구독 상태 확인에 실패했습니다:', error);
         setIsSubscribed(false);
       } finally {
         setLoadingSub(false);
@@ -265,11 +277,9 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
   }
 
   const handleSubscribe = async () => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
-      alert('로그인이 필요합니다.');
-      return;
-    }
+    const accessToken = getAccessToken();
+    if (!accessToken) return;
+
     try {
       const res = await fetch(`${API_BASE_URL}/api/v1/subscribes/playlists/${playlist.id}`, {
         method: 'POST',
@@ -286,8 +296,32 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
         const data = await res.json();
         alert(data.message || '구독에 실패했습니다.');
       }
-    } catch (err) {
-      alert('서버와 연결할 수 없습니다.');
+    } catch (error) {
+      handleApiError(error, '구독에 실패했습니다.');
+    }
+  };
+
+  const handleUnsubscribe = async () => {
+    const accessToken = getAccessToken();
+    if (!accessToken) return;
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/v1/subscribes/playlists/${playlist.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      });
+      if (res.ok) {
+        alert('구독이 취소되었습니다.');
+        setIsSubscribed(false);
+        fetchSubscribeCount(playlist.id);
+      } else {
+        const data = await res.json();
+        alert(data.message || '구독 취소에 실패했습니다.');
+      }
+    } catch (error) {
+      handleApiError(error, '구독 취소에 실패했습니다.');
     }
   };
 
@@ -313,7 +347,7 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
       {loadingSub ? (
         <SubscribeBtn disabled>로딩중...</SubscribeBtn>
       ) : isSubscribed ? (
-        <SubscribeBtn disabled>구독중</SubscribeBtn>
+        <SubscribeBtn onClick={handleUnsubscribe}>구독 취소</SubscribeBtn>
       ) : (
         <SubscribeBtn onClick={handleSubscribe}>구독하기</SubscribeBtn>
       )}
