@@ -27,6 +27,10 @@ const ProfilePage: React.FC = () => {
   const [subscribedPlaylists, setSubscribedPlaylists] = useState<any[]>([]);
   const [loadingSubscribed, setLoadingSubscribed] = useState(true);
   const [errorSubscribed, setErrorSubscribed] = useState<string | null>(null);
+  const [myPlaylists, setMyPlaylists] = useState<any[]>([]);
+  const [loadingMyPlaylists, setLoadingMyPlaylists] = useState(true);
+  const [errorMyPlaylists, setErrorMyPlaylists] = useState<string | null>(null);
+
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -126,6 +130,39 @@ const ProfilePage: React.FC = () => {
     fetchSubscribed();
   }, []);
 
+  useEffect(() => {
+    const fetchMyPlaylists = async () => {
+      if (!userId) return;
+  
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/playlists/user/${userId}`);
+        if (!res.ok) throw new Error('내 플레이리스트를 불러오지 못했습니다');
+  
+        const data = await res.json();
+  
+        // 본인인 경우 전체 보여주고, 다른 사람인 경우 공개된 것만 보여줌
+        const filtered = isMe ? data : data.filter((item: any) => item.isPublic);
+  
+        // user.nickname 필드 필요 시 변환
+        const mapped = filtered.map((item: any) => ({
+          ...item,
+          user: {
+            ...item.user,
+            nickname: item.user.userName,
+          },
+        }));
+  
+        setMyPlaylists(mapped);
+      } catch (err: any) {
+        setErrorMyPlaylists(err.message || '에러가 발생했습니다');
+      } finally {
+        setLoadingMyPlaylists(false);
+      }
+    };
+  
+    fetchMyPlaylists();
+  }, [userId, isMe]);
+  
   if (notFound) {
     return <div style={{ padding: '48px', textAlign: 'center', fontSize: '22px', color: '#d00' }}>존재하지 않는 사용자입니다.</div>;
   }
@@ -138,9 +175,15 @@ const ProfilePage: React.FC = () => {
       <Section>
         <div style={{fontWeight: 'bold', fontSize: '18px', marginBottom: '16px'}}>내 플레이리스트</div>
         <CardGrid>
-          {samplePlaylistResponses.map((item, idx) => (
-            <PlayListCard key={idx} playlist={item} />
-          ))}
+          {loadingMyPlaylists ? (
+            <div>로딩 중...</div>
+          ) : errorMyPlaylists ? (
+            <div style={{ color: 'red' }}>{errorMyPlaylists}</div>
+          ) : (
+            myPlaylists.map((item, idx) => (
+              <PlayListCard key={item.id || idx} playlist={item} />
+            ))
+          )}
         </CardGrid>
       </Section>
       <Section>

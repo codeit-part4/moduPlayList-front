@@ -1,5 +1,5 @@
 export const 
-API_BASE_URL = "https://mople-team02.p-e.kr";
+API_BASE_URL = "http://localhost:8080";
 
 //http://localhost:8080
-//https://mople-team02.p-e.kr/
+//https://mople-team02.p-e.kr
