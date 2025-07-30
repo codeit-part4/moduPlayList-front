@@ -101,7 +101,14 @@ const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, otherUserId }) => {
   const [receiverId, setReceiverId] = useState('');
   const chatRef = useRef<HTMLDivElement>(null);
   const stompClientRef = useRef<Client | null>(null);
+  const getSocketUrl = () => {
+    return window.location.protocol === 'https:'
+      ? 'https://your-domain.com/ws'
+      : 'http://localhost:8080/ws'; // 로컬 개발용
+  };
 
+  const socket = new SockJS(getSocketUrl());
+  
   // 내 userId 가져오기
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -141,7 +148,6 @@ const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, otherUserId }) => {
   useEffect(() => {
     if (!roomId || !senderId || !receiverId) return;
     const token = localStorage.getItem('accessToken');
-    const socket = new SockJS('http://localhost:8080/ws');
     const client = new Client({
       webSocketFactory: () => socket,
       connectHeaders: token ? { Authorization: `Bearer ${token}` } : {},
