@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import type { PlaylistResponse } from '../../type/playlists';
 import { API_BASE_URL } from '../../api';
+import { useNavigate } from 'react-router-dom';
 
 const InfoContainer = styled.div`
   display: flex;
@@ -110,6 +111,14 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
       return null;
     }
     return token;
+  };
+
+  const navigate = useNavigate();
+
+  const handleGoToProfile = () => {
+    if (playlist?.user?.nickname) {
+      navigate(`/${playlist.user.nickname}`);
+    }
   };
 
   const handleApiError = (error: any, message: string) => {
@@ -327,10 +336,16 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
 
   return (
     <InfoContainer>
-      <Title>{playlist.title}</Title>
+      <CuratorBox>
+        <Title>{playlist.title}</Title>
+        <a>수정</a>
+        <a>삭제</a>
+      </CuratorBox>
       <CuratorBox>
         <Avatar />
-        <CuratorName>{playlist.user.nickname}</CuratorName>
+        <CuratorName onClick={handleGoToProfile} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
+          {playlist.user.nickname}
+        </CuratorName>
       </CuratorBox>
       <StatsContainer>
         <Subscriber>구독자: {subscribeCount}명</Subscriber>
