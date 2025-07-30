@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import UserProfileInfo from '../components/UserProfileInfo';
 import PlayListCard from '../components/playlist/PlayListCard.tsx';
-import { samplePlaylistResponses } from '../type/playlists.ts';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../api';
 
