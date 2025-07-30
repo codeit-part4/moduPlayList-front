@@ -103,8 +103,8 @@ const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, otherUserId }) => {
   const stompClientRef = useRef<Client | null>(null);
   const getSocketUrl = () => {
     return window.location.protocol === 'https:'
-      ? 'https://your-domain.com/ws'
-      : 'http://localhost:8080/ws'; // 로컬 개발용
+      ? 'https://mople-team02.p-e.kr/wss'
+      : 'http://localhost:8080/ws';
   };
 
   const socket = new SockJS(getSocketUrl());
