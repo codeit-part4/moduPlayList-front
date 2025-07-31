@@ -10,7 +10,7 @@ export const Rating = styled.div<{ score: number }>`
   } else if (score >= 2.0) {
     return 'black' // 2.0 이상이면 검은색
   } else {
-    return 'gray' // 그 외 (2.0 미만)는 회색
+    return '#bbbbbb' // 그 외 (2.0 미만)는 회색
   }
 }};
 `

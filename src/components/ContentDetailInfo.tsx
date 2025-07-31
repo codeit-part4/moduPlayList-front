@@ -17,7 +17,7 @@ const Container = styled.div`
 
 const ImageContainer = styled.div`
     width: 240px;
-    height: 320px;
+    height: 350px;
     flex-shrink: 0;
 
     img {
@@ -26,6 +26,18 @@ const ImageContainer = styled.div`
         object-fit: cover;
         border-radius: 4px;
     }
+`;
+
+const FallbackImage = styled.div`
+  width: 100%;
+  height: 350px;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: #999;
+  border-radius: 4px;
 `;
 
 const InfoContainer = styled.div`
@@ -94,8 +106,8 @@ const ContentDetailInfo: React.FC<ContentDetailInfoProps> = ({ content }) => {
     try {
       const res = await fetch(`${API_BASE_URL}/api/contents/${id}/likes`);
       if (res.ok) {
-        const count = await res.json();
-        setLikeCount(count);
+        const data = await res.json();
+        setLikeCount(data.count);
       }
     } catch (error) {
       console.error('좋아요 수를 가져오는데 실패했습니다:', error);
@@ -208,17 +220,22 @@ const ContentDetailInfo: React.FC<ContentDetailInfoProps> = ({ content }) => {
   return (
     <Container>
       <ImageContainer>
-        <img src={content.image} alt={content.title} />
+        {content.posterUrl ? (
+          <img src={content.posterUrl} alt={content.title} />
+        ) : (
+          <FallbackImage>🎬</FallbackImage>
+        )}
       </ImageContainer>
       <InfoContainer>
         <Category>{content.category}</Category>
         <Title>{content.title}</Title>
-        <Description>{content.description}</Description>
+        <Description>{content.summary}</Description>
         <Stats>
-          <Rating score={content.rating}>{content.rating.toFixed(1)}</Rating>
-          <span>조회수 {content.viewers.toLocaleString()}회</span>
-          <LikeButton 
-            onClick={handleLikeToggle} 
+          <Rating score={content.averageRating ?? 0}>
+            {(content.averageRating ?? 0).toFixed(1)}
+          </Rating>
+          <LikeButton
+            onClick={handleLikeToggle}
             disabled={loadingLike}
             style={{ color: isLiked ? '#ff4757' : '#666' }}
           >

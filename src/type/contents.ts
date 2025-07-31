@@ -1,11 +1,16 @@
 export interface Content {
   id: string;
-  category: string;
+  externalId: string;
+  source: string;
   title: string;
-  description: string;
-  rating: number;
-  viewers: number;
-  image: string;
+  summary: string;
+  category: string;
+  posterUrl: string;
+  genres: string[];
+  releasedAt: string;
+  totalRatingCount: number;
+  averageRating: number;
+  viewers?: number;
 }
 
 export const dummyContents = [
