@@ -24,9 +24,9 @@ export const formatDate = (dateString: string): string => {
 export interface ContentResponse {
   data: Content[];
   totalElements: number;
-  totalPages: number;
+  nextCursor: string;
   size: number;
-  number: number;
+  hasNext: boolean;
 }
 
 

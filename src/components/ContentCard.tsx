@@ -54,8 +54,10 @@ const Category = styled.div`
 const Title = styled.div`
     font-weight: bold;
     font-size: 16px;
-    margin-bottom: 4px;
+    margin-bottom: 10px;
     color: #333;
+    height: 20px;
+    overflow: hidden;
 `;
 
 const Description = styled.div`
