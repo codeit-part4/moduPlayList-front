@@ -6,7 +6,6 @@ export interface Content {
   category: string;
   genres: string[];
   releasedAt: string;
-  viewers?: number;
   description: string;
   rating: number;
   reviews: number;
