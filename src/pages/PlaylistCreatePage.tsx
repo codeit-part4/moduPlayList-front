@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { dummyContents } from '../type/contents.ts';
 import { useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from '../api.ts';
+import { API_BASE_URL } from '../api/api.ts';
 import { PlaylistForm } from '../components/playlist/PlaylistFormProps.tsx';
 import { ContentSelector } from '../components/playlist/ContentSelector.tsx';
 import styled from 'styled-components';

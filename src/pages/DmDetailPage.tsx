@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import DmChatRoom from '../components/DmChatRoom';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { API_BASE_URL } from '../api';
+import { API_BASE_URL } from '../api/api.ts';
 
 
 const Wrapper = styled.div`
@@ -43,7 +43,7 @@ const DmDetailPage: React.FC = () => {
   // 상대방 정보 가져오기
   useEffect(() => {
     if (!otherUserId) return;
-    
+
     const fetchOtherUserInfo = async () => {
       try {
         const res = await fetch(`${API_BASE_URL}/api/users/${otherUserId}`);
@@ -72,4 +72,4 @@ const DmDetailPage: React.FC = () => {
   );
 };
 
-export default DmDetailPage; 
+export default DmDetailPage;

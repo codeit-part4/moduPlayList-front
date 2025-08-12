@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import UserProfileInfo from '../components/UserProfileInfo';
 import PlayListCard from '../components/playlist/PlayListCard.tsx';
 import { useParams } from 'react-router-dom';
-import { API_BASE_URL } from '../api';
+import { API_BASE_URL } from '../api/api.ts';
 
 const Section = styled.div`
   margin-bottom: 32px;
@@ -132,16 +132,16 @@ const ProfilePage: React.FC = () => {
   useEffect(() => {
     const fetchMyPlaylists = async () => {
       if (!userId) return;
-  
+
       try {
         const res = await fetch(`${API_BASE_URL}/api/playlists/user/${userId}`);
         if (!res.ok) throw new Error('내 플레이리스트를 불러오지 못했습니다');
-  
+
         const data = await res.json();
-  
+
         // 본인인 경우 전체 보여주고, 다른 사람인 경우 공개된 것만 보여줌
         const filtered = isMe ? data : data.filter((item: any) => item.isPublic);
-  
+
         // user.nickname 필드 필요 시 변환
         const mapped = filtered.map((item: any) => ({
           ...item,
@@ -150,7 +150,7 @@ const ProfilePage: React.FC = () => {
             nickname: item.user.userName,
           },
         }));
-  
+
         setMyPlaylists(mapped);
       } catch (err: any) {
         setErrorMyPlaylists(err.message || '에러가 발생했습니다');
@@ -158,10 +158,10 @@ const ProfilePage: React.FC = () => {
         setLoadingMyPlaylists(false);
       }
     };
-  
+
     fetchMyPlaylists();
   }, [userId, isMe]);
-  
+
   if (notFound) {
     return <div style={{ padding: '48px', textAlign: 'center', fontSize: '22px', color: '#d00' }}>존재하지 않는 사용자입니다.</div>;
   }

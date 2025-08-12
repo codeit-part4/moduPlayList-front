@@ -62,7 +62,8 @@ const Description = styled.div`
     color: #888;
     font-size: 13px;
     margin-bottom: 8px;
-    height: 40px;
+    height: 60px;
+    overflow: hidden;
 `;
 
 const Viewers = styled.div`

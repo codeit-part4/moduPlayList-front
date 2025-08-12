@@ -2,13 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { InputBox } from './common/InputBox.tsx'
 import { Avatar } from './common/Avatar.tsx'
-
-interface Participant {
-  participantId: string;
-  userId: string;
-  userName: string;
-  joinedAt: string;
-}
+import type { Participant } from '../type/participant.ts';
 
 interface ParticipantListProps {
   participants: Participant[];

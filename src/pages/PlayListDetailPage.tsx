@@ -6,7 +6,7 @@ import { dummyContents } from '../type/contents.ts';
 import { BackButton } from '../components/common/BackButton.tsx';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { API_BASE_URL } from '../api';
+import { API_BASE_URL } from '../api/api.ts';
 
 const Section = styled.div`
   margin-bottom: 32px;

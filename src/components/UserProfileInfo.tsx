@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { API_BASE_URL } from '../api';
+import { API_BASE_URL } from '../api/api.ts';
 import { useNavigate } from 'react-router-dom';
 
 const ProfileBox = styled.div`
@@ -132,7 +132,7 @@ const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name, followeeI
   const handleSendMessage = async () => {
     if (!userId) return;
     const token = localStorage.getItem('accessToken');
-    
+
     try {
       // DM 방 생성 또는 기존 방 찾기
       const res = await fetch(`${API_BASE_URL}/api/dm/${userId}`, {
@@ -176,7 +176,7 @@ const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name, followeeI
             >
               {isFollowing ? '팔로잉' : '팔로우'}
             </Btn>
-            <Btn 
+            <Btn
               style={{ background: '#e5e7eb', color: '#222' }}
               onClick={handleSendMessage}
             >
@@ -190,4 +190,4 @@ const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name, followeeI
   );
 };
 
-export default UserProfileInfo; 
+export default UserProfileInfo;

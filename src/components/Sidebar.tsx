@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { API_BASE_URL } from '../api';
+import { API_BASE_URL } from '../api/api.ts';
 
 const SidebarContainer = styled.div`
     width: 190px;

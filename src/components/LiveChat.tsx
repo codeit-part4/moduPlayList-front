@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { InputBox } from './common/InputBox.tsx'
 import { Avatar } from './common/Avatar.tsx'
 import { Client } from '@stomp/stompjs';
-import { API_BASE_URL } from '../api.ts';
+import { API_BASE_URL } from '../api/api.ts';
 import SockJS from 'sockjs-client';
 
 const ChatContainer = styled.div`

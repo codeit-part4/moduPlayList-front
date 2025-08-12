@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { API_BASE_URL } from '../api';
+import { API_BASE_URL } from '../api/api.ts';
 import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
@@ -168,4 +168,4 @@ const DmListPage: React.FC = () => {
   );
 };
 
-export default DmListPage; 
+export default DmListPage;

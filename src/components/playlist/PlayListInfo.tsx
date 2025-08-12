@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import type { PlaylistResponse } from '../../type/playlists';
-import { API_BASE_URL } from '../../api';
+import { API_BASE_URL } from '../../api/api.ts';
 import { useNavigate } from 'react-router-dom';
 
 const InfoContainer = styled.div`
@@ -221,7 +221,7 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
   // 좋아요 토글
   const handleLikeToggle = async () => {
     if (!playlist?.id || loadingLike) return;
-    
+
     if (isLiked) {
       await removeLike(playlist.id);
     } else {
@@ -350,8 +350,8 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
       <StatsContainer>
         <Subscriber>구독자: {subscribeCount}명</Subscriber>
         <LikeCount>
-          <LikeButton 
-            onClick={handleLikeToggle} 
+          <LikeButton
+            onClick={handleLikeToggle}
             disabled={loadingLike}
             style={{ color: isLiked ? '#ff4757' : '#666' }}
           >
@@ -372,4 +372,4 @@ const PlayListInfo: React.FC<PlayListInfoProps> = ({ playlist }) => {
   );
 };
 
-export default PlayListInfo; 
+export default PlayListInfo;

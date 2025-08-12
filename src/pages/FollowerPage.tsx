@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { API_BASE_URL } from '../api';
+import { API_BASE_URL } from '../api/api.ts';
 import { useParams, useNavigate } from 'react-router-dom';
 import UserProfileInfo from '../components/UserProfileInfo';
 
@@ -173,4 +173,4 @@ const FollowerPage: React.FC = () => {
   );
 };
 
-export default FollowerPage; 
+export default FollowerPage;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ContentSearchBar from '../components/ContentSearchBar';
 import PlayListCard from '../components/playlist/PlayListCard.tsx';
-import { API_BASE_URL } from '../api';
+import { API_BASE_URL } from '../api/api.ts';
 // import { FaPlus } from 'react-icons/fa'; // 삭제
 
 const CardGrid = styled.div`

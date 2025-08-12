@@ -4,7 +4,7 @@ import { InputBox } from './common/InputBox.tsx';
 import { Avatar } from './common/Avatar.tsx';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import { API_BASE_URL } from '../api';
+import { API_BASE_URL } from '../api/api.ts';
 
 const ChatRoomContainer = styled.div`
   flex: 1;

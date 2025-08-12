@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate  } from 'react-router-dom';
-import { API_BASE_URL } from '../api';
+import { API_BASE_URL } from '../api/api.ts';
 
 const TopbarContainer = styled.div`
     height: 60px;
@@ -246,7 +246,7 @@ const NotificationDropdown: React.FC = () => {
             if (response.ok) {
                 const data = await response.json();
                 setNotifications(data.content || []);
-                
+
                 // 읽지 않은 알림 개수 계산
                 const unreadCount = data.content?.filter((notification: Notification) => !notification.isRead).length || 0;
                 setUnreadCount(unreadCount);
@@ -374,7 +374,7 @@ const NotificationDropdown: React.FC = () => {
                                         <NotificationIcon type={notification.notificationType}>
                                             {getNotificationIcon(notification.notificationType)}
                                         </NotificationIcon>
-                                        
+
                                         <NotificationText>
                                             <NotificationMessage>
                                                 {notification.content}

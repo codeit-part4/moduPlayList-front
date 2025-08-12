@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
-import { API_BASE_URL } from '../../api.ts'
+import { API_BASE_URL } from '../../api/api.ts'
 import { StyledLabel } from '../common/StyledLabel.tsx'
 import { Input } from '../common/Input.tsx'
 import { BoxTitle } from '../common/BoxTitle.tsx'
