@@ -184,7 +184,7 @@ const UserProfileInfo: React.FC<UserProfileInfoProps> = ({ isMe, name, followeeI
             </Btn>
           </BtnGroup>
         )}
-        <Status>지금 <b>인셉션</b>을 보고 있습니다.</Status>
+        <Status>지금 <b>슈퍼맨</b>을 보고 있습니다.</Status>
       </Info>
     </ProfileBox>
   );

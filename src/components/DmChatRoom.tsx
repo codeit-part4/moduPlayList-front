@@ -101,6 +101,13 @@ const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, otherUserId }) => {
   const [receiverId, setReceiverId] = useState('');
   const chatRef = useRef<HTMLDivElement>(null);
   const stompClientRef = useRef<Client | null>(null);
+  const getSocketUrl = () => {
+    return window.location.protocol === 'https:'
+      ? 'https://mople-team02.p-e.kr/ws'
+      : 'http://localhost:8080/ws';
+  };
+
+  const socket = new SockJS(getSocketUrl());
 
   // 내 userId 가져오기
   useEffect(() => {
@@ -141,7 +148,6 @@ const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, otherUserId }) => {
   useEffect(() => {
     if (!roomId || !senderId || !receiverId) return;
     const token = localStorage.getItem('accessToken');
-    const socket = new SockJS('http://localhost:8080/ws');
     const client = new Client({
       webSocketFactory: () => socket,
       connectHeaders: token ? { Authorization: `Bearer ${token}` } : {},
@@ -202,7 +208,7 @@ const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, otherUserId }) => {
           placeholder="메시지를 입력하세요."
           value={input}
           onChange={e => setInput(e.target.value)}
-          onKeyDown={e => { if (e.key === 'Enter') handleSend(); }}
+          onKeyUp={e => { if (e.key === 'Enter') handleSend(); }}
         />
         <SendButton onClick={handleSend} title="메시지 전송">↑</SendButton>
       </InputArea>
@@ -210,4 +216,4 @@ const DmChatRoom: React.FC<DmChatRoomProps> = ({ roomId, otherUserId }) => {
   );
 };
 
-export default DmChatRoom; 
+export default DmChatRoom;

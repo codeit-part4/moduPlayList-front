@@ -1,7 +1,12 @@
 export interface Content {
   id: string;
-  category: string;
+  externalId: string;
+  source: string;
   title: string;
+  category: string;
+  genres: string[];
+  releasedAt: string;
+  viewers?: number;
   description: string;
   rating: number;
   reviews: number;
