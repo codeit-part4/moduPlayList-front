@@ -4,9 +4,19 @@ export interface Content {
   title: string;
   description: string;
   rating: number;
+  reviews: number;
   viewers: number;
-  image: string;
+  posterUrl: string;
 }
+
+export interface ContentResponse {
+  data: Content[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+}
+
 
 export const dummyContents = [
   {
@@ -16,7 +26,8 @@ export const dummyContents = [
     category: '프로그래밍',
     rating: 4.8,
     viewers: 1234,
-    image: 'https://picsum.photos/seed/react/200/300'
+    reviews: 4332,
+    posterUrl: 'https://picsum.photos/seed/react/200/300'
   },
   {
     id: '2',
@@ -25,7 +36,8 @@ export const dummyContents = [
     category: '디자인',
     rating: 3.3,
     viewers: 856,
-    image: 'https://picsum.photos/seed/design/200/300'
+    reviews: 123,
+    posterUrl: 'https://picsum.photos/seed/design/200/300'
   },
   {
     id: '3',
@@ -34,7 +46,8 @@ export const dummyContents = [
     category: '마케팅',
     rating: 0.2,
     viewers: 673,
-    image: 'https://picsum.photos/seed/marketing/200/300'
+    reviews: 321,
+    posterUrl: 'https://picsum.photos/seed/marketing/200/300'
   },
   {
     id: '4',
@@ -43,7 +56,8 @@ export const dummyContents = [
     category: '프로그래밍',
     rating: 4.9,
     viewers: 892,
-    image: 'https://picsum.photos/seed/typescript/200/300'
+    reviews: 55,
+    posterUrl: 'https://picsum.photos/seed/typescript/200/300'
   },
   {
     id: '5',
@@ -52,7 +66,8 @@ export const dummyContents = [
     category: '디자인',
     rating: 4.6,
     viewers: 445,
-    image: 'https://picsum.photos/seed/motion/200/300'
+    reviews: 1,
+    posterUrl: 'https://picsum.photos/seed/motion/200/300'
   },
   {
     id: '6',
@@ -61,7 +76,8 @@ export const dummyContents = [
     category: '데이터',
     rating: 4.7,
     viewers: 1023,
-    image: 'https://picsum.photos/seed/data/200/300'
+    reviews: 432532,
+    posterUrl: 'https://picsum.photos/seed/data/200/300'
   },
   {
     id: '7',
@@ -70,7 +86,8 @@ export const dummyContents = [
     category: '보안',
     rating: 4.8,
     viewers: 567,
-    image: 'https://picsum.photos/seed/security/200/300'
+    reviews: 123,
+    posterUrl: 'https://picsum.photos/seed/security/200/300'
   },
   {
     id: '8',
@@ -79,7 +96,8 @@ export const dummyContents = [
     category: '클라우드',
     rating: 4.6,
     viewers: 789,
-    image: 'https://picsum.photos/seed/cloud/200/300'
+    reviews: 456,
+    posterUrl: 'https://picsum.photos/seed/cloud/200/300'
   },
   {
     id: '9',
@@ -88,7 +106,8 @@ export const dummyContents = [
     category: '인공지능',
     rating: 4.5,
     viewers: 1567,
-    image: 'https://picsum.photos/seed/ai/200/300'
+    reviews: 101,
+    posterUrl: 'https://picsum.photos/seed/ai/200/300'
   },
   {
     id: '10',
@@ -97,7 +116,8 @@ export const dummyContents = [
     category: '블록체인',
     rating: 4.3,
     viewers: 678,
-    image: 'https://picsum.photos/seed/blockchain/200/300'
+    reviews: 100,
+    posterUrl: 'https://picsum.photos/seed/blockchain/200/300'
   },
   {
     id: '11',
@@ -106,7 +126,8 @@ export const dummyContents = [
     category: '게임개발',
     rating: 4.7,
     viewers: 2341,
-    image: 'https://picsum.photos/seed/game/200/300'
+    reviews: 5,
+    posterUrl: 'https://picsum.photos/seed/game/200/300'
   },
   {
     id: '12',
@@ -115,7 +136,8 @@ export const dummyContents = [
     category: '데브옵스',
     rating: 4.4,
     viewers: 890,
-    image: 'https://picsum.photos/seed/devops/200/300'
+    reviews: 111111111,
+    posterUrl: 'https://picsum.photos/seed/devops/200/300'
   },
   {
     id: '13',
@@ -124,7 +146,8 @@ export const dummyContents = [
     category: '디자인',
     rating: 4.8,
     viewers: 1234,
-    image: 'https://picsum.photos/seed/mobile/200/300'
+    reviews: 4332,
+    posterUrl: 'https://picsum.photos/seed/mobile/200/300'
   },
   {
     id: '14',
@@ -133,7 +156,8 @@ export const dummyContents = [
     category: '데이터',
     rating: 4.6,
     viewers: 945,
-    image: 'https://picsum.photos/seed/bigdata/200/300'
+    reviews: 4332,
+    posterUrl: 'https://picsum.photos/seed/bigdata/200/300'
   },
   {
     id: '15',
@@ -142,6 +166,7 @@ export const dummyContents = [
     category: '보안',
     rating: 4.5,
     viewers: 756,
-    image: 'https://picsum.photos/seed/network/200/300'
+    reviews: 4332,
+    posterUrl: 'https://picsum.photos/seed/network/200/300'
   }
 ];
