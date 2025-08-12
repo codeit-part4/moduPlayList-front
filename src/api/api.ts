@@ -67,14 +67,18 @@ export const fetchPlaylistContents = async (playlistId: string) => {
 
 export const fetchContents = async ({
   title = '',
-  size = 30,
-  page = 0,
+  nextCursor = '',
+  size = 20,
+}: {
+  title?: string;
+  nextCursor?: string | null;
+  size?: number;
 } = {}): Promise<ContentResponse> => {
   try {
     const params = new URLSearchParams();
     if (title) params.append('title', title);
+    if (nextCursor) params.append('cursor', nextCursor); // nextCursor가 있을 때만 'cursor' 파라미터 추가
     params.append('size', size.toString());
-    params.append('page', page.toString());
 
     const response = await fetch(`${API_BASE_URL}/api/contents?${params.toString()}`, {
       method: 'GET',
