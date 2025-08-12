@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import MainLayout from './layouts/MainLayout';
-import HomePage from './pages/HomePage'; // 예시 페이지
+import ContentListPage from './pages/ContentListPage.tsx';
 import ContentPage from './pages/ContentPage';
 import ContentReviewsPage from './pages/ContentReviewsPage';
 import PlayListPage from './pages/PlayListPage';
@@ -27,8 +27,8 @@ const App: React.FC = () => {
 
         {/* 로그인 이후 공통 Layout 적용 */}
         <Route element={<MainLayout />}>
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/contents" element={<HomePage />} />
+          <Route path="/home" element={<ContentListPage />} />
+          <Route path="/contents" element={<ContentListPage />} />
           <Route path="/contents/:contentId" element={<ContentPage />} />
           <Route path="/contents/:contentId/reviews" element={<ContentReviewsPage />} />
           <Route path="/playlists" element={<PlayListPage />} />

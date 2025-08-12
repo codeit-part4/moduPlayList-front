@@ -1,4 +1,96 @@
-export const 
-API_BASE_URL = "http://mople-alb-1855363092.ap-northeast-2.elb.amazonaws.com";
+import type { PlaylistResponse } from './type/playlists.ts';
+import type { ContentResponse } from './type/contents.ts';
 
-//localhost:8080
+export const
+  API_BASE_URL = 'http://localhost:8080';
+
+export const fetchPlaylists = async (): Promise<PlaylistResponse[]> => {
+  try {
+    const response = await fetch(API_BASE_URL + '/api/playlists/', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch playlists');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching playlists:', error);
+    throw error;
+  }
+};
+
+export const fetchPlaylistById = async (playlistId: string): Promise<PlaylistResponse> => {
+  try {
+    const response = await fetch(API_BASE_URL + `/api/playlists/${playlistId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch playlist');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching playlist:', error);
+    throw error;
+  }
+};
+
+export const fetchPlaylistContents = async (playlistId: string) => {
+  try {
+    const response = await fetch(API_BASE_URL + `/api/playlists/${playlistId}/contents`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch playlist contents');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching playlist contents:', error);
+    throw error;
+  }
+};
+
+export const fetchContents = async ({
+  title = '',
+  size = 30,
+  page = 0,
+} = {}): Promise<ContentResponse> => {
+  try {
+    const params = new URLSearchParams();
+    if (title) params.append('title', title);
+    params.append('size', size.toString());
+    params.append('page', page.toString());
+
+    const response = await fetch(`${API_BASE_URL}/api/contents?${params.toString()}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error('콘텐츠를 불러오는데 실패했습니다.');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('콘텐츠 조회 중 오류 발생:', error);
+    throw error;
+  }
+};
