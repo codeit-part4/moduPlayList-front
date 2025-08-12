@@ -1,7 +1,7 @@
 // components/ContentDetailInfo.tsx
 import React from 'react';
 import styled from 'styled-components';
-import type { Content } from '../type/contents.ts';
+import { type Content, formatDate } from '../type/contents.ts';
 import { Rating } from './common/Rating.tsx';
 
 const Container = styled.div`
@@ -52,10 +52,24 @@ const Description = styled.p`
 `;
 
 const Stats = styled.div`
-  display: flex;
   gap: 16px;
   font-size: 14px;
 `;
+
+const InfoItem = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #666;
+  font-size: 14px;
+`;
+
+
+const ReleaseDate = styled(InfoItem)`
+  color: #444;
+  font-weight: 500;
+`;
+
 
 interface ContentDetailInfoProps {
   content: Content;
@@ -65,14 +79,17 @@ const ContentDetailInfo: React.FC<ContentDetailInfoProps> = ({ content }) => {
   return (
     <Container>
       <ImageContainer>
-        <img src={content.image} alt={content.title} />
+        <img src={content.posterUrl} alt={content.title} />
       </ImageContainer>
       <InfoContainer>
         <Category>{content.category}</Category>
         <Title>{content.title}</Title>
         <Description>{content.description}</Description>
+        <ReleaseDate>
+          <span>공개일:</span> {formatDate(content.releasedAt)}
+        </ReleaseDate>
         <Stats>
-          <Rating score={content.rating}>{content.rating.toFixed(1)}</Rating>
+          <Rating $score={content.rating ?? 0}>{(content.rating ?? 0).toFixed(1)}</Rating>
           <span>조회수 {content.viewers.toLocaleString()}회</span>
         </Stats>
       </InfoContainer>
